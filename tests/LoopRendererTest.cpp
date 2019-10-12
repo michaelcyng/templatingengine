@@ -93,7 +93,6 @@ TEST_F(LoopRendererTest, TestSingleValueAsList) {
             std::make_shared<templatingengine::PlainTextRenderer>(".");
     testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
-    templatingengine::ValueHandler testSingleValuePtr("Test String");
     templatingengine::ParameterSet parameterSet;
     parameterSet["testList"] = "Test String";
 
