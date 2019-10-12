@@ -49,10 +49,8 @@ TEST_F(LoopRendererTest, TestEmptyList) {
     templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
     testRendererChainPtr->addRenderer(testRendererPtr1);
 
-    templatingengine::ValueHandler emptyValueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(std::make_shared<templatingengine::ValueList>());
-
     templatingengine::ParameterSet parameterSet;
-    parameterSet["emptyList"] = emptyValueListPtr;
+    parameterSet["emptyList"] = templatingengine::ValueList::makeList();
 
     templatingengine::LoopRenderer testLoopRenderer("emptyList",
                                         "element",

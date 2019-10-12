@@ -11,6 +11,10 @@ ValueList::ValueList(const ValueHandler &valueHandler):
 ValueList(std::static_pointer_cast<ValueList>(static_cast<ValueBasePtr_t>(valueHandler))->myValueList) {
 }
 
+ValueBasePtr_t ValueList::makeList() {
+    return std::static_pointer_cast<ValueBase>(std::make_shared<ValueList>());
+}
+
 ValueBasePtrListIter_t ValueList::begin() noexcept {
     return myValueList.begin();
 }
