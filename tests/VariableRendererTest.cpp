@@ -5,9 +5,9 @@
 #include <gtest/gtest.h>
 #include <list>
 
-#include <StringValue.h>
-#include <ValueList.h>
-#include <VariableRenderer.h>
+#include <dataTypes/StringValue.h>
+#include <dataTypes/ValueList.h>
+#include <renderers/VariableRenderer.h>
 
 class VariableRendererTest : public ::testing::Test {
 protected:

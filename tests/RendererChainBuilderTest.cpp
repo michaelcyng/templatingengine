@@ -4,14 +4,14 @@
 
 #include <gtest/gtest.h>
 
-#include <LoopClosingToken.h>
-#include <LoopOpeningToken.h>
-#include <PlainTextToken.h>
-#include <RendererChainBuilder.h>
-#include <Token.h>
-#include <ValueList.h>
-#include <VariableToken.h>
-#include <StringValue.h>
+#include <tokens/LoopClosingToken.h>
+#include <tokens/LoopOpeningToken.h>
+#include <tokens/PlainTextToken.h>
+#include <builders/RendererChainBuilder.h>
+#include <tokens/Token.h>
+#include <dataTypes/ValueList.h>
+#include <tokens/VariableToken.h>
+#include <dataTypes/StringValue.h>
 
 class RendererChainBuilderTest : public ::testing::Test {
 protected:

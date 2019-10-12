@@ -5,10 +5,10 @@
 #include <gtest/gtest.h>
 #include <memory>
 
-#include <PlainTextRenderer.h>
-#include <RendererChain.h>
-#include <StringValue.h>
-#include <VariableRenderer.h>
+#include <renderers/PlainTextRenderer.h>
+#include <renderers/RendererChain.h>
+#include <dataTypes/StringValue.h>
+#include <renderers/VariableRenderer.h>
 
 class RendererChainTest : public ::testing::Test {
 protected:

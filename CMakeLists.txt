@@ -36,7 +36,8 @@ if (CMAKE_VERSION VERSION_LESS 2.8.11)
 endif()
 
 include_directories(./include)
-file(GLOB templatingenginesrc "./src/*")
+file(GLOB templatingenginesrc "./src/*" "./src/builders/*" "./src/dataTypes/*" "./src/renderers/*" "./src/tokens/*"
+        "./src/utils/*")
 add_library(templatingengine STATIC ${templatingenginesrc})
 
 add_executable(EscapeStreamTest tests/EscapeStreamTest.cpp)

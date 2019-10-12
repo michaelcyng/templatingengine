@@ -4,11 +4,11 @@
 
 #include <gtest/gtest.h>
 
-#include <LoopClosingToken.h>
-#include <LoopOpeningToken.h>
-#include <PlainTextToken.h>
-#include <TokenUtils.h>
-#include <VariableToken.h>
+#include <tokens/LoopClosingToken.h>
+#include <tokens/LoopOpeningToken.h>
+#include <tokens/PlainTextToken.h>
+#include <utils/TokenUtils.h>
+#include <tokens/VariableToken.h>
 
 class TokenUtilsTest : public ::testing::Test {
 protected:

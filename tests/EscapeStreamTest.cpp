@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 #include <sstream>
 
-#include <EscapeStream.h>
+#include <utils/EscapeStream.h>
 
 class EscapeStreamTest : public ::testing::Test {
 protected:

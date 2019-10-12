@@ -5,8 +5,8 @@
 #include <gtest/gtest.h>
 #include <list>
 
-#include <StringValue.h>
-#include <ValueList.h>
+#include <dataTypes/StringValue.h>
+#include <dataTypes/ValueList.h>
 
 class ValueListTest : public ::testing::Test {
 protected:
