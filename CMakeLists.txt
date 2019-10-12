@@ -28,15 +28,10 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
         ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
         EXCLUDE_FROM_ALL)
 
-# The gtest/gtest_main targets carry header search path
-# dependencies automatically when using CMake 2.8.11 or
-# later. Otherwise we have to add them here ourselves.
-if (CMAKE_VERSION VERSION_LESS 2.8.11)
-    include_directories("${gtest_SOURCE_DIR}/include")
-endif()
+include_directories("${gtest_SOURCE_DIR}/include")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 
-include_directories(./include)
-file(GLOB templatingenginesrc "./src/*")
+file(GLOB_RECURSE templatingenginesrc ${CMAKE_CURRENT_SOURCE_DIR}/src *.cpp)
 add_library(templatingengine STATIC ${templatingenginesrc})
 
 add_executable(EscapeStreamTest tests/EscapeStreamTest.cpp)

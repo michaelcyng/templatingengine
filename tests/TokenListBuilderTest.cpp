@@ -4,10 +4,10 @@
 
 #include <gtest/gtest.h>
 
-#include <LoopOpeningToken.h>
-#include <PlainTextToken.h>
-#include <TokenListBuilder.h>
-#include <VariableToken.h>
+#include <tokens/LoopOpeningToken.h>
+#include <tokens/PlainTextToken.h>
+#include <builders/TokenListBuilder.h>
+#include <tokens/VariableToken.h>
 
 class TokenListBuilderTest : public ::testing::Test {
 protected:

@@ -5,11 +5,11 @@
 #include <gtest/gtest.h>
 #include <memory>
 
-#include <LoopRenderer.h>
-#include <PlainTextRenderer.h>
-#include <StringValue.h>
-#include <ValueList.h>
-#include <VariableRenderer.h>
+#include <renderers/LoopRenderer.h>
+#include <renderers/PlainTextRenderer.h>
+#include <dataTypes/StringValue.h>
+#include <dataTypes/ValueList.h>
+#include <renderers/VariableRenderer.h>
 
 class LoopRendererTest : public ::testing::Test {
 protected:

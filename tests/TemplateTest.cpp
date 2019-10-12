@@ -6,9 +6,9 @@
 #include <sstream>
 
 #include <ParameterSet.h>
-#include <StringValue.h>
+#include <dataTypes/StringValue.h>
 #include <Template.h>
-#include <ValueList.h>
+#include <dataTypes/ValueList.h>
 
 class TemplateTest : public ::testing::Test {
 protected:

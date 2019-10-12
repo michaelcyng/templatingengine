@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 
-#include <PlainTextRenderer.h>
+#include <renderers/PlainTextRenderer.h>
 
 class PlainTextRendererTest : public ::testing::Test {
 protected:

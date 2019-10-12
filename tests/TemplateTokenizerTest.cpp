@@ -5,7 +5,7 @@
 #include <gtest/gtest.h>
 #include <sstream>
 
-#include <TemplateTokenizer.h>
+#include <utils/TemplateTokenizer.h>
 
 class TemplateTokenizerTest : public ::testing::Test {
 protected:

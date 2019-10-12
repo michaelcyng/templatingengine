@@ -4,10 +4,13 @@
 
 #include <list>
 
-#include <RendererChainBuilder.h>
 #include <Template.h>
-#include <TemplateTokenizer.h>
-#include <TokenListBuilder.h>
+
+#include <builders/RendererChainBuilder.h>
+#include <builders/TokenListBuilder.h>
+
+#include <utils/TemplateTokenizer.h>
+
 
 using namespace templatingengine;
 

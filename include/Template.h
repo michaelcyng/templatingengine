@@ -9,7 +9,7 @@
 #include <ostream>
 
 #include <ParameterSet.h>
-#include <RendererChain.h>
+#include <renderers/RendererChain.h>
 
 namespace templatingengine {
 
