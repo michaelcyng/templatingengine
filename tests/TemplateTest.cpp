@@ -6,9 +6,7 @@
 #include <sstream>
 
 #include <ParameterSet.h>
-#include <dataTypes/StringValue.h>
 #include <Template.h>
-#include <dataTypes/ValueList.h>
 
 class TemplateTest : public ::testing::Test {
 protected:
@@ -79,7 +77,7 @@ TEST_F(TemplateTest, TestTemplateWithLoop) {
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["header"] = "Hello!";
-    parameterSet["somearray"] = std::list<std::string>({"apple", "banana", "citrus"});
+    parameterSet["somearray"] = {"apple", "banana", "citrus"};
     parameterSet["footer"] = "That's it!";
 
     std::stringstream resultStream;
@@ -115,8 +113,8 @@ TEST_F(TemplateTest, TestTemplateWithNestedLoop) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["outerList"] = std::list<std::string>({"outer value 1", "outer value 2"});
-    parameterSet["innerList"] = std::list<std::string>({"inner value 1", "inner value 2", "inner value 3"});
+    parameterSet["outerList"] = {"outer value 1", "outer value 2"};
+    parameterSet["innerList"] = {"inner value 1", "inner value 2", "inner value 3"};
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);

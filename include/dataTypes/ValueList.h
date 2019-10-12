@@ -8,13 +8,14 @@
 #include <list>
 
 #include <dataTypes/MultiValueBase.h>
-#include <dataTypes/ValueHandler.h>
 
 namespace templatingengine {
 
 
     typedef std::list<ValueBasePtr_t>    ValueBasePtrList_t;
     typedef ValueBasePtrList_t::iterator ValueBasePtrListIter_t;
+
+    class ValueHandler;
 
     class ValueList : public MultiValueBase {
     public:

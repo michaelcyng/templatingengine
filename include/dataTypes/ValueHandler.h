@@ -8,18 +8,26 @@
 #include <list>
 
 #include <dataTypes/ValueBase.h>
+#include <dataTypes/ValueList.h>
 
 namespace templatingengine {
-
-    class ValueList;
 
     class ValueHandler {
     public:
 
         ValueHandler() = default;
-        ValueHandler(const char* value);
+        ValueHandler(const char* value); // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
         ValueHandler(const std::string& value); // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
         ValueHandler(ValueBasePtr_t valuePtr); // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
+
+        template <typename T, std::enable_if_t<std::is_convertible<T, ValueHandler>::value, int> = 0 >
+        ValueHandler(const std::initializer_list<T>& valueList) {
+            std::list<ValueHandler> valueHandlerList;
+            for (const auto& value: valueList) {
+                valueHandlerList.emplace_back(value);
+            }
+            myValuePtr = std::static_pointer_cast<ValueBase>(std::make_shared<ValueList>(valueHandlerList));
+        }
 
         ValueBasePtr_t&       operator->();
         const ValueBasePtr_t& operator->() const;

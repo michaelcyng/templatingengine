@@ -2,6 +2,7 @@
 // Created by Cho Yiu Ng on 07.10.19.
 //
 
+#include <dataTypes/ValueHandler.h>
 #include <dataTypes/ValueList.h>
 
 using namespace templatingengine;

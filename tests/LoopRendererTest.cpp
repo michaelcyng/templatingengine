@@ -32,7 +32,7 @@ TEST_F(LoopRendererTest, TestSingleLoop) {
     testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["testList"] = std::list<std::string>({"Value 1", "Value 2", "Value 3"});
+    parameterSet["testList"] = {"Value 1", "Value 2", "Value 3"};
 
     templatingengine::LoopRenderer testLoopRender("testList",
                                                   "testListElement",
@@ -117,7 +117,7 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
     testLoopRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["testList"] = std::list<std::string>({"Inner String 1", "Inner String 2", "Inner String 3"});
+    parameterSet["testList"] = {"Inner String 1", "Inner String 2", "Inner String 3"};
 
     templatingengine::RendererBasePtr_t testLoopRendererPtr =
             std::make_shared<templatingengine::LoopRenderer>("testList",
@@ -160,10 +160,9 @@ TEST_F(LoopRendererTest, TestNestedLoop) {
                                                      outerLoopRendererChainPtr);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["innerValueList"] =
-            std::list<std::string>({"Inner String 1.", "Inner String 2.", "Inner String 3."});
-    parameterSet["outerOpenValueList"] =
-            std::list<std::string>({"Outer Opening String 1.", "Outer Opening String 2.", "Outer Opening String 3."});
+    parameterSet["innerValueList"] = {"Inner String 1.", "Inner String 2.", "Inner String 3."};
+    parameterSet["outerOpenValueList"] = {"Outer Opening String 1.", "Outer Opening String 2.",
+                                          "Outer Opening String 3."};
 
     std::stringstream ss;
     outerLoopRenderer.render(ss, parameterSet);

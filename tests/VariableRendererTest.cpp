@@ -5,8 +5,6 @@
 #include <gtest/gtest.h>
 #include <list>
 
-#include <dataTypes/StringValue.h>
-#include <dataTypes/ValueList.h>
 #include <renderers/VariableRenderer.h>
 
 class VariableRendererTest : public ::testing::Test {
@@ -44,7 +42,7 @@ TEST_F(VariableRendererTest, TestNonExistingVariable) {
 TEST_F(VariableRendererTest, TestListVariableRender) {
     templatingengine::VariableRenderer testRenderer("listVar");
     templatingengine::ParameterSet parameters;
-    parameters["listVar"] = std::list<std::string>({"Value 1", "Value 2"});
+    parameters["listVar"] = {"Value 1", "Value 2"};
     std::stringstream ss;
     testRenderer.render(ss, parameters);
 

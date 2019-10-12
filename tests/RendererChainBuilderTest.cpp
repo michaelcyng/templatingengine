@@ -9,9 +9,7 @@
 #include <tokens/PlainTextToken.h>
 #include <builders/RendererChainBuilder.h>
 #include <tokens/Token.h>
-#include <dataTypes/ValueList.h>
 #include <tokens/VariableToken.h>
-#include <dataTypes/StringValue.h>
 
 class RendererChainBuilderTest : public ::testing::Test {
 protected:
@@ -85,7 +83,7 @@ TEST_F(RendererChainBuilderTest, TestLinearLoop) {
     auto testRendererChainPtr = testBuilder.buildRendererChain(tokenPtrList);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["valueList"] = std::list<std::string>({"Test String 1.", "Test String 2.", "Test String 3."});
+    parameterSet["valueList"] = {"Test String 1.", "Test String 2.", "Test String 3."};
 
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);
@@ -150,12 +148,10 @@ TEST_F(RendererChainBuilderTest, TestNestedLoop) {
     auto testRendererChainPtr = testBuilder.buildRendererChain(tokenPtrList);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["outerValueList"] = std::list<std::string>({"Outer element 1.", "Outer element 2."});
-    parameterSet["innerValueList1"] =
-            std::list<std::string>({"Inner loop 1 element 1.", "Inner loop 1 element 2.", "Inner loop 1 element 3."});
-    parameterSet["innerValueList2"] =
-            std::list<std::string>({"Inner loop 2 element 1.", "Inner loop 2 element 2.", "Inner loop 2 element 3.",
-                                    "Inner loop 2 element 4."});
+    parameterSet["outerValueList"] = {"Outer element 1.", "Outer element 2."};
+    parameterSet["innerValueList1"] = {"Inner loop 1 element 1.", "Inner loop 1 element 2.", "Inner loop 1 element 3."};
+    parameterSet["innerValueList2"] = {"Inner loop 2 element 1.", "Inner loop 2 element 2.", "Inner loop 2 element 3.",
+                                       "Inner loop 2 element 4."};
 
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);
@@ -197,7 +193,7 @@ TEST_F(RendererChainBuilderTest, TestMissingLoopClosingToken) {
     auto testRendererChainPtr = testBuilder.buildRendererChain(tokenPtrList);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["valueList"] = std::list<std::string>({"Value 1", "Value 2"});
+    parameterSet["valueList"] = {"Value 1", "Value 2"};
 
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);
