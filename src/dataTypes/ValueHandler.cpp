@@ -24,8 +24,3 @@ const ValueBasePtr_t& ValueHandler::operator->() const {
 ValueBase& ValueHandler::operator*() {
     return *myValuePtr;
 }
-
-ValueHandler& ValueHandler::operator=(templatingengine::ValueBasePtr_t valuePtr) {
-    myValuePtr = std::move(valuePtr);
-    return *this;
-}

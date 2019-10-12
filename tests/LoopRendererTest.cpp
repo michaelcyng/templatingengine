@@ -31,16 +31,17 @@ TEST_F(LoopRendererTest, TestSingleLoop) {
             std::make_shared<templatingengine::PlainTextRenderer>(".");
     testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
-    auto testValueStlList = std::list<templatingengine::ValueHandler>({
+    /*auto testValueStlList = std::list<templatingengine::ValueHandler>({
         templatingengine::ValueHandler("Value 1"),
         templatingengine::ValueHandler("Value 2"),
         templatingengine::ValueHandler("Value 3")
      });
     templatingengine::ValueHandler testValueList = std::static_pointer_cast<templatingengine::ValueBase>(
-            std::make_shared<templatingengine::ValueList>(testValueStlList));
+            std::make_shared<templatingengine::ValueList>(testValueStlList));*/
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["testList"] = testValueList;
+    //parameterSet["testList"] = testValueList;
+    parameterSet["testList"] = std::list<std::string>({"Value 1", "Value 2", "Value 3"});
 
     templatingengine::LoopRenderer testLoopRender("testList",
                                       "testListElement",

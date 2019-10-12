@@ -51,8 +51,8 @@ TEST_F(TemplateTest, TestTemplateWithVariables) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["variable1"] = std::make_shared<templatingengine::StringValue>("variable 1");
-    parameterSet["variable2"] = std::make_shared<templatingengine::StringValue>("variable 2");
+    parameterSet["variable1"] = templatingengine::ValueHandler("variable 1");
+    parameterSet["variable2"] = templatingengine::ValueHandler("variable 2");
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);
@@ -78,14 +78,9 @@ TEST_F(TemplateTest, TestTemplateWithLoop) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["header"] = std::make_shared<templatingengine::StringValue>("Hello!");
-    auto someArrayList = std::list<templatingengine::ValueHandler>({
-        templatingengine::ValueHandler("apple"),
-        templatingengine::ValueHandler("banana"),
-        templatingengine::ValueHandler("citrus")
-    });
-    parameterSet["somearray"] = std::make_shared<templatingengine::ValueList>(someArrayList);
-    parameterSet["footer"] = std::make_shared<templatingengine::StringValue>("That's it!");
+    parameterSet["header"] = templatingengine::ValueHandler("Hello!");
+    parameterSet["somearray"] = std::list<std::string>({"apple", "banana", "citrus"});
+    parameterSet["footer"] = templatingengine::ValueHandler("That's it!");
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);
@@ -120,17 +115,8 @@ TEST_F(TemplateTest, TestTemplateWithNestedLoop) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    auto outerList = std::list<templatingengine::ValueHandler>({
-        templatingengine::ValueHandler("outer value 1"),
-        templatingengine::ValueHandler("outer value 2")
-    });
-    parameterSet["outerList"] = std::make_shared<templatingengine::ValueList>(outerList);
-    auto innerList = std::list<templatingengine::ValueHandler>({
-        templatingengine::ValueHandler("inner value 1"),
-        templatingengine::ValueHandler("inner value 2"),
-        templatingengine::ValueHandler("inner value 3")
-    });
-    parameterSet["innerList"] = std::make_shared<templatingengine::ValueList>(innerList);
+    parameterSet["outerList"] = std::list<std::string>({"outer value 1", "outer value 2"});
+    parameterSet["innerList"] = std::list<std::string>({"inner value 1", "inner value 2", "inner value 3"});
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);
@@ -180,7 +166,7 @@ TEST_F(TemplateTest, TestEscapeCharacter) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["variable"] = std::make_shared<templatingengine::StringValue>("variable value here");
+    parameterSet["variable"] = templatingengine::ValueHandler("variable value here");
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);

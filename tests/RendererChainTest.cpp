@@ -49,8 +49,8 @@ TEST_F(RendererChainTest, TestLinearRendererChain) {
     testrendererChain.addRenderer(testRenderer5);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["sentence1"] = std::make_shared<templatingengine::StringValue>("This is sentence 2.");
-    parameterSet["sentence2"] = std::make_shared<templatingengine::StringValue>("Should not appear");
+    parameterSet["sentence1"] = templatingengine::ValueHandler("This is sentence 2.");
+    parameterSet["sentence2"] = templatingengine::ValueHandler("Should not appear");
 
     std::stringstream ss;
     testrendererChain.render(ss, parameterSet);
@@ -90,8 +90,8 @@ TEST_F(RendererChainTest, TestNestedRendererChain) {
     testOuterRendererChain.addRenderer(testOuterRenderer3);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["innerVar"] = std::make_shared<templatingengine::StringValue>("Inner variable renderer.");
-    parameterSet["outerVar"] = std::make_shared<templatingengine::StringValue>("Outer variable renderer.");
+    parameterSet["innerVar"] = templatingengine::ValueHandler("Inner variable renderer.");
+    parameterSet["outerVar"] = templatingengine::ValueHandler("Outer variable renderer.");
 
     std::stringstream ss;
     testOuterRendererChain.render(ss, parameterSet);

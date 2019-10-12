@@ -55,7 +55,7 @@ TEST_F(RendererChainBuilderTest, TestVariableToken) {
     templatingengine::RendererChainBuilder testBuilder;
     auto testRendererChainPtr = testBuilder.buildRendererChain(testTokenPtrList);
     templatingengine::ParameterSet parameterSet;
-    parameterSet["testVariable"] = std::make_shared<templatingengine::StringValue>("Variable text.");
+    parameterSet["testVariable"] = templatingengine::ValueHandler("Variable text.");
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);
 
@@ -229,7 +229,7 @@ TEST_F(RendererChainBuilderTest, TestMissingLoopClosingToken) {
         std::make_shared<templatingengine::StringValue>("Value 2")
     };
     templatingengine::ParameterSet parameterSet;
-    parameterSet["valueList"] = std::make_shared<templatingengine::ValueList>(valuePtrList);
+    parameterSet["valueList"] = std::list<std::string>({"Value 1", "Value 2"});
 
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);

@@ -5,9 +5,13 @@
 #ifndef TEMPLATINGENGINE_VALUEHANDLER_H
 #define TEMPLATINGENGINE_VALUEHANDLER_H
 
+#include <list>
+
 #include <dataTypes/ValueBase.h>
 
 namespace templatingengine {
+
+    class ValueList;
 
     class ValueHandler {
     public:
@@ -19,7 +23,16 @@ namespace templatingengine {
         ValueBasePtr_t&       operator->();
         const ValueBasePtr_t& operator->() const;
         ValueBase&            operator*();
-        ValueHandler&         operator=(ValueBasePtr_t valuePtr);
+
+        template <typename Container>
+        ValueHandler& operator=(const Container& valueContainer) {
+            std::list<ValueHandler> valueHandlerList;
+            for (const auto& value: valueContainer) {
+                valueHandlerList.emplace_back(value);
+            }
+            myValuePtr = std::static_pointer_cast<ValueBase>(std::make_shared<ValueList>(valueHandlerList));
+            return *this;
+        }
 
         operator const ValueBasePtr_t&() const { return myValuePtr; } // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
         operator ValueBasePtr_t&() { return myValuePtr; } // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)

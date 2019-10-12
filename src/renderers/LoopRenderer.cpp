@@ -35,7 +35,7 @@ void LoopRenderer::multiValueRender(std::ostream &os, const templatingengine::Pa
     templatingengine::ParameterSet newParameters(parameters);
 
     for (const auto& elementValue: static_cast<ValueList>(parameters.at(myValueListName))) {
-        newParameters[myElementName] = elementValue;
+        newParameters[myElementName] = ValueHandler(elementValue);
         myRendererChainPtr->render(os, newParameters);
     }
 }

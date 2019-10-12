@@ -22,8 +22,8 @@ protected:
 TEST_F(VariableRendererTest, TestStringVariableRender) {
     templatingengine::VariableRenderer testRenderer("testVar");
     templatingengine::ParameterSet parameters;
-    parameters["testVar"] = std::make_shared<templatingengine::StringValue>("Test Value");
-    parameters["wrongVar"] = std::make_shared<templatingengine::StringValue>("Wrong Value");
+    parameters["testVar"] = templatingengine::ValueHandler("Test Value");
+    parameters["wrongVar"] = templatingengine::ValueHandler("Wrong Value");
     std::stringstream ss;
     testRenderer.render(ss, parameters);
 
@@ -33,8 +33,8 @@ TEST_F(VariableRendererTest, TestStringVariableRender) {
 TEST_F(VariableRendererTest, TestNonExistingVariable) {
     templatingengine::VariableRenderer testRenderer("nonExistingVar");
     templatingengine::ParameterSet parameters;
-    parameters["var1"] = std::make_shared<templatingengine::StringValue>("Value1");
-    parameters["var2"] = std::make_shared<templatingengine::StringValue>("Value2");
+    parameters["var1"] = templatingengine::ValueHandler("Value1");
+    parameters["var2"] = templatingengine::ValueHandler("Value2");
     std::stringstream ss;
     testRenderer.render(ss, parameters);
 
@@ -44,11 +44,7 @@ TEST_F(VariableRendererTest, TestNonExistingVariable) {
 TEST_F(VariableRendererTest, TestListVariableRender) {
     templatingengine::VariableRenderer testRenderer("listVar");
     templatingengine::ParameterSet parameters;
-    auto value1Ptr = templatingengine::ValueHandler("Value 1");
-    auto value2Ptr = templatingengine::ValueHandler("Value 2");
-    parameters["listVar"] = std::static_pointer_cast<templatingengine::ValueBase>(
-            std::make_shared<templatingengine::ValueList>(std::list<templatingengine::ValueHandler>({value1Ptr,
-                                                                                                     value2Ptr})));
+    parameters["listVar"] = std::list<std::string>({"Value 1", "Value 2"});
     std::stringstream ss;
     testRenderer.render(ss, parameters);
 
