@@ -86,11 +86,12 @@ TEST_F(RendererChainBuilderTest, TestLinearLoop) {
 
     templatingengine::ParameterSet parameterSet;
     auto testStringValueList = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("Test String 1."),
-        std::make_shared<templatingengine::StringValue>("Test String 2."),
-        std::make_shared<templatingengine::StringValue>("Test String 3.")
+        templatingengine::ValueHandler("Test String 1."),
+        templatingengine::ValueHandler("Test String 2."),
+        templatingengine::ValueHandler("Test String 3.")
     });
-    templatingengine::ValueHandler valueListPtr = std::make_shared<templatingengine::ValueList>(testStringValueList);
+    templatingengine::ValueHandler valueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>(testStringValueList));
     parameterSet["valueList"] = valueListPtr;
 
     std::stringstream ss;
@@ -156,27 +157,28 @@ TEST_F(RendererChainBuilderTest, TestNestedLoop) {
     auto testRendererChainPtr = testBuilder.buildRendererChain(tokenPtrList);
 
     auto outerValueList = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("Outer element 1."),
-        std::make_shared<templatingengine::StringValue>("Outer element 2.")
+        templatingengine::ValueHandler("Outer element 1."),
+        templatingengine::ValueHandler("Outer element 2.")
     });
-    templatingengine::ValueHandler outerValueListPtr = std::make_shared<templatingengine::ValueList>(outerValueList);
+    templatingengine::ValueHandler outerValueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>(outerValueList));
 
     auto innerValueList1 = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("Inner loop 1 element 1."),
-        std::make_shared<templatingengine::StringValue>("Inner loop 1 element 2."),
-        std::make_shared<templatingengine::StringValue>("Inner loop 1 element 3.")
+        templatingengine::ValueHandler("Inner loop 1 element 1."),
+        templatingengine::ValueHandler("Inner loop 1 element 2."),
+        templatingengine::ValueHandler("Inner loop 1 element 3.")
     });
-    templatingengine::ValueHandler innerValueListPtr1 =
-            std::make_shared<templatingengine::ValueList>(innerValueList1);
+    templatingengine::ValueHandler innerValueListPtr1 = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>(innerValueList1));
 
     auto innerValueList2 = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("Inner loop 2 element 1."),
-        std::make_shared<templatingengine::StringValue>("Inner loop 2 element 2."),
-        std::make_shared<templatingengine::StringValue>("Inner loop 2 element 3."),
-        std::make_shared<templatingengine::StringValue>("Inner loop 2 element 4.")
+        templatingengine::ValueHandler("Inner loop 2 element 1."),
+        templatingengine::ValueHandler("Inner loop 2 element 2."),
+        templatingengine::ValueHandler("Inner loop 2 element 3."),
+        templatingengine::ValueHandler("Inner loop 2 element 4.")
     });
-    templatingengine::ValueHandler innerValueListPtr2 =
-            std::make_shared<templatingengine::ValueList>(innerValueList2);
+    templatingengine::ValueHandler innerValueListPtr2 = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>(innerValueList2));
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["outerValueList"] = outerValueListPtr;

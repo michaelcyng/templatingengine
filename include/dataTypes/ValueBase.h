@@ -19,7 +19,26 @@ namespace templatingengine {
     private:
     };
 
-    typedef std::shared_ptr<ValueBase> ValueHandler;
+    typedef std::shared_ptr<ValueBase> ValueBasePtr_t;
+
+    class ValueHandler {
+    public:
+
+        ValueHandler() = default;
+        ValueHandler(const std::string& value); // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
+        ValueHandler(ValueBasePtr_t valuePtr); // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
+
+        ValueBasePtr_t&       operator->();
+        const ValueBasePtr_t& operator->() const;
+        ValueBase&            operator*();
+        ValueHandler&         operator=(ValueBasePtr_t valuePtr);
+
+        operator const ValueBasePtr_t&() const { return myValuePtr; } // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
+        operator ValueBasePtr_t&() { return myValuePtr; } // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
+
+    private:
+        ValueBasePtr_t myValuePtr;
+    };
 }
 
 std::ostream& operator<<(std::ostream&, const templatingengine::ValueBase& value);

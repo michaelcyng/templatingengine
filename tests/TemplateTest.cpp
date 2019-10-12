@@ -80,9 +80,9 @@ TEST_F(TemplateTest, TestTemplateWithLoop) {
     templatingengine::ParameterSet parameterSet;
     parameterSet["header"] = std::make_shared<templatingengine::StringValue>("Hello!");
     auto someArrayList = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("apple"),
-        std::make_shared<templatingengine::StringValue>("banana"),
-        std::make_shared<templatingengine::StringValue>("citrus")
+        templatingengine::ValueHandler("apple"),
+        templatingengine::ValueHandler("banana"),
+        templatingengine::ValueHandler("citrus")
     });
     parameterSet["somearray"] = std::make_shared<templatingengine::ValueList>(someArrayList);
     parameterSet["footer"] = std::make_shared<templatingengine::StringValue>("That's it!");
@@ -121,14 +121,14 @@ TEST_F(TemplateTest, TestTemplateWithNestedLoop) {
 
     templatingengine::ParameterSet parameterSet;
     auto outerList = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("outer value 1"),
-        std::make_shared<templatingengine::StringValue>("outer value 2")
+        templatingengine::ValueHandler("outer value 1"),
+        templatingengine::ValueHandler("outer value 2")
     });
     parameterSet["outerList"] = std::make_shared<templatingengine::ValueList>(outerList);
     auto innerList = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("inner value 1"),
-        std::make_shared<templatingengine::StringValue>("inner value 2"),
-        std::make_shared<templatingengine::StringValue>("inner value 3")
+        templatingengine::ValueHandler("inner value 1"),
+        templatingengine::ValueHandler("inner value 2"),
+        templatingengine::ValueHandler("inner value 3")
     });
     parameterSet["innerList"] = std::make_shared<templatingengine::ValueList>(innerList);
 

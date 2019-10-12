@@ -32,11 +32,12 @@ TEST_F(LoopRendererTest, TestSingleLoop) {
     testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
     auto testValueStlList = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("Value 1"),
-        std::make_shared<templatingengine::StringValue>("Value 2"),
-        std::make_shared<templatingengine::StringValue>("Value 3")
+        templatingengine::ValueHandler("Value 1"),
+        templatingengine::ValueHandler("Value 2"),
+        templatingengine::ValueHandler("Value 3")
      });
-    templatingengine::ValueHandler testValueList = std::make_shared<templatingengine::ValueList>(testValueStlList);
+    templatingengine::ValueHandler testValueList = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>(testValueStlList));
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["testList"] = testValueList;
@@ -56,7 +57,7 @@ TEST_F(LoopRendererTest, TestEmptyList) {
     templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
     testRendererChainPtr->addRenderer(testRendererPtr1);
 
-    templatingengine::ValueHandler emptyValueListPtr = std::make_shared<templatingengine::ValueList>();
+    templatingengine::ValueHandler emptyValueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(std::make_shared<templatingengine::ValueList>());
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["emptyList"] = emptyValueListPtr;
@@ -76,7 +77,8 @@ TEST_F(LoopRendererTest, TestNonExistingList) {
     templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
     testRendererChainPtr->addRenderer(testRendererPtr1);
 
-    templatingengine::ValueHandler emptyValueListPtr = std::make_shared<templatingengine::ValueList>();
+    templatingengine::ValueHandler emptyValueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>());
 
     templatingengine::ParameterSet parameterSet;
 
@@ -99,7 +101,7 @@ TEST_F(LoopRendererTest, TestSingleValueAsList) {
             std::make_shared<templatingengine::PlainTextRenderer>(".");
     testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
-    templatingengine::ValueHandler testSingleValuePtr = std::make_shared<templatingengine::StringValue>("Test String");
+    templatingengine::ValueHandler testSingleValuePtr("Test String");
     templatingengine::ParameterSet parameterSet;
     parameterSet["testList"] = testSingleValuePtr;
 
@@ -124,10 +126,11 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
 
     auto testValueStlList =
             std::list<templatingengine::ValueHandler>({
-                std::make_shared<templatingengine::StringValue>("Inner String 1"),
-                std::make_shared<templatingengine::StringValue>("Inner String 2"),
-                std::make_shared<templatingengine::StringValue>("Inner String 3")});
-    templatingengine::ValueHandler testValueList = std::make_shared<templatingengine::ValueList>(testValueStlList);
+                templatingengine::ValueHandler("Inner String 1"),
+                templatingengine::ValueHandler("Inner String 2"),
+                templatingengine::ValueHandler("Inner String 3")});
+    templatingengine::ValueHandler testValueList = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>(testValueStlList));
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["testList"] = testValueList;
@@ -144,8 +147,7 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
     testRendererChain.addRenderer(testVariableRendererPtr);
     testRendererChain.addRenderer(testLoopRendererPtr);
 
-    templatingengine::ValueHandler testOuterValuePtr =
-            std::make_shared<templatingengine::StringValue>("Outer String.");
+    templatingengine::ValueHandler testOuterValuePtr("Outer String.");
     parameterSet["testListElement"] = testOuterValuePtr;
 
     std::stringstream ss;
@@ -178,21 +180,21 @@ TEST_F(LoopRendererTest, TestNestedLoop) {
     templatingengine::ParameterSet parameterSet;
 
     auto stlInnerValueList = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("Inner String 1."),
-        std::make_shared<templatingengine::StringValue>("Inner String 2."),
-        std::make_shared<templatingengine::StringValue>("Inner String 3.")
+        templatingengine::ValueHandler("Inner String 1."),
+        templatingengine::ValueHandler("Inner String 2."),
+        templatingengine::ValueHandler("Inner String 3.")
     });
-    templatingengine::ValueHandler innerValueListPtr =
-            std::make_shared<templatingengine::ValueList>(stlInnerValueList);
+    templatingengine::ValueHandler innerValueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>(stlInnerValueList));
     parameterSet["innerValueList"] = innerValueListPtr;
 
     auto stlOuterOpenValueList = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("Outer Opening String 1."),
-        std::make_shared<templatingengine::StringValue>("Outer Opening String 2."),
-        std::make_shared<templatingengine::StringValue>("Outer Opening String 3.")
+        templatingengine::ValueHandler("Outer Opening String 1."),
+        templatingengine::ValueHandler("Outer Opening String 2."),
+        templatingengine::ValueHandler("Outer Opening String 3.")
     });
-    templatingengine::ValueHandler outerOpenValueListPtr =
-            std::make_shared<templatingengine::ValueList>(stlOuterOpenValueList);
+    templatingengine::ValueHandler outerOpenValueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>(stlOuterOpenValueList));
     parameterSet["outerOpenValueList"] = outerOpenValueListPtr;
 
     std::stringstream ss;

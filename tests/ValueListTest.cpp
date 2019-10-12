@@ -20,22 +20,24 @@ protected:
 
 TEST_F(ValueListTest, TestIterator) {
     auto testStringValueList = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("Test String 1"),
-        std::make_shared<templatingengine::StringValue>("Test String 2")
+        templatingengine::ValueHandler("Test String 1"),
+        templatingengine::ValueHandler("Test String 2")
     });
     templatingengine::ValueList testValueList(testStringValueList);
     auto iter = testValueList.begin();
-    ASSERT_EQ(std::static_pointer_cast<templatingengine::StringValue>(*iter)->getValue(), "Test String 1");
+    ASSERT_EQ(std::static_pointer_cast<templatingengine::StringValue>(
+            static_cast<templatingengine::ValueBasePtr_t>(*iter))->getValue(), "Test String 1");
     ++iter;
-    ASSERT_EQ(std::static_pointer_cast<templatingengine::StringValue>(*iter)->getValue(), "Test String 2");
+    ASSERT_EQ(std::static_pointer_cast<templatingengine::StringValue>(
+            static_cast<templatingengine::ValueBasePtr_t>(*iter))->getValue(), "Test String 2");
     ++iter;
     ASSERT_EQ(iter, testValueList.end());
 }
 
 TEST_F(ValueListTest, TestPrint) {
     auto testStringValueList = std::list<templatingengine::ValueHandler>({
-        std::make_shared<templatingengine::StringValue>("Test String 1"),
-        std::make_shared<templatingengine::StringValue>("Test String 2")
+        templatingengine::ValueHandler("Test String 1"),
+        templatingengine::ValueHandler("Test String 2")
     });
     templatingengine::ValueList testValueList(testStringValueList);
     std::stringstream ss;

@@ -44,10 +44,11 @@ TEST_F(VariableRendererTest, TestNonExistingVariable) {
 TEST_F(VariableRendererTest, TestListVariableRender) {
     templatingengine::VariableRenderer testRenderer("listVar");
     templatingengine::ParameterSet parameters;
-    auto value1Ptr = std::make_shared<templatingengine::StringValue>("Value 1");
-    auto value2Ptr = std::make_shared<templatingengine::StringValue>("Value 2");
-    parameters["listVar"] = std::make_shared<templatingengine::ValueList>(std::list<templatingengine::ValueHandler>(
-            {value1Ptr, value2Ptr}));
+    auto value1Ptr = templatingengine::ValueHandler("Value 1");
+    auto value2Ptr = templatingengine::ValueHandler("Value 2");
+    parameters["listVar"] = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>(std::list<templatingengine::ValueHandler>({value1Ptr,
+                                                                                                     value2Ptr})));
     std::stringstream ss;
     testRenderer.render(ss, parameters);
 
