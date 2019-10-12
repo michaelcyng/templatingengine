@@ -8,6 +8,7 @@
 #include <unordered_map>
 
 #include <dataTypes/ValueBase.h>
+#include <dataTypes/ValueHandler.h>
 
 namespace templatingengine {
 

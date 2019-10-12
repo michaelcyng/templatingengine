@@ -8,6 +8,7 @@
 #include <list>
 
 #include <dataTypes/MultiValueBase.h>
+#include <dataTypes/ValueHandler.h>
 
 namespace templatingengine {
 
@@ -19,6 +20,7 @@ namespace templatingengine {
     public:
 
         ValueList() = default;
+        explicit ValueList(const ValueHandler& valueHandler);
 
         template <typename ValueBaseContainer>
         explicit ValueList(const ValueBaseContainer& container) : myValueList(container.begin(), container.end()) {

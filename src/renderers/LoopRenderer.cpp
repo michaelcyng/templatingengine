@@ -34,8 +34,7 @@ void LoopRenderer::render(std::ostream& os, const ParameterSet& parameters) cons
 void LoopRenderer::multiValueRender(std::ostream &os, const templatingengine::ParameterSet &parameters) const {
     templatingengine::ParameterSet newParameters(parameters);
 
-    auto valueList = static_cast<ValueBasePtr_t>(parameters.at(myValueListName));
-    for (const auto& elementValue: *(std::static_pointer_cast<ValueList>(valueList))) {
+    for (const auto& elementValue: static_cast<ValueList>(parameters.at(myValueListName))) {
         newParameters[myElementName] = elementValue;
         myRendererChainPtr->render(os, newParameters);
     }

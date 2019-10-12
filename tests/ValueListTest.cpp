@@ -6,6 +6,7 @@
 #include <list>
 
 #include <dataTypes/StringValue.h>
+#include <dataTypes/ValueHandler.h>
 #include <dataTypes/ValueList.h>
 
 class ValueListTest : public ::testing::Test {

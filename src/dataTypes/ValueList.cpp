@@ -6,6 +6,10 @@
 
 using namespace templatingengine;
 
+ValueList::ValueList(const ValueHandler &valueHandler):
+ValueList(std::static_pointer_cast<ValueList>(static_cast<ValueBasePtr_t>(valueHandler))->myValueList) {
+}
+
 ValueBasePtrListIter_t ValueList::begin() noexcept {
     return myValueList.begin();
 }
