@@ -31,12 +31,12 @@ TEST_F(LoopRendererTest, TestSingleLoop) {
             std::make_shared<templatingengine::PlainTextRenderer>(".");
     testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
-    auto testValueStlList = std::list<templatingengine::ValueBasePtr_t>({
+    auto testValueStlList = std::list<templatingengine::ValueHandler>({
         std::make_shared<templatingengine::StringValue>("Value 1"),
         std::make_shared<templatingengine::StringValue>("Value 2"),
         std::make_shared<templatingengine::StringValue>("Value 3")
      });
-    templatingengine::ValueBasePtr_t testValueList = std::make_shared<templatingengine::ValueList>(testValueStlList);
+    templatingengine::ValueHandler testValueList = std::make_shared<templatingengine::ValueList>(testValueStlList);
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["testList"] = testValueList;
@@ -56,7 +56,7 @@ TEST_F(LoopRendererTest, TestEmptyList) {
     templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
     testRendererChainPtr->addRenderer(testRendererPtr1);
 
-    templatingengine::ValueBasePtr_t emptyValueListPtr = std::make_shared<templatingengine::ValueList>();
+    templatingengine::ValueHandler emptyValueListPtr = std::make_shared<templatingengine::ValueList>();
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["emptyList"] = emptyValueListPtr;
@@ -76,7 +76,7 @@ TEST_F(LoopRendererTest, TestNonExistingList) {
     templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
     testRendererChainPtr->addRenderer(testRendererPtr1);
 
-    templatingengine::ValueBasePtr_t emptyValueListPtr = std::make_shared<templatingengine::ValueList>();
+    templatingengine::ValueHandler emptyValueListPtr = std::make_shared<templatingengine::ValueList>();
 
     templatingengine::ParameterSet parameterSet;
 
@@ -99,7 +99,7 @@ TEST_F(LoopRendererTest, TestSingleValueAsList) {
             std::make_shared<templatingengine::PlainTextRenderer>(".");
     testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
-    templatingengine::ValueBasePtr_t testSingleValuePtr = std::make_shared<templatingengine::StringValue>("Test String");
+    templatingengine::ValueHandler testSingleValuePtr = std::make_shared<templatingengine::StringValue>("Test String");
     templatingengine::ParameterSet parameterSet;
     parameterSet["testList"] = testSingleValuePtr;
 
@@ -123,11 +123,11 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
     testLoopRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
     auto testValueStlList =
-            std::list<templatingengine::ValueBasePtr_t>({
+            std::list<templatingengine::ValueHandler>({
                 std::make_shared<templatingengine::StringValue>("Inner String 1"),
                 std::make_shared<templatingengine::StringValue>("Inner String 2"),
                 std::make_shared<templatingengine::StringValue>("Inner String 3")});
-    templatingengine::ValueBasePtr_t testValueList = std::make_shared<templatingengine::ValueList>(testValueStlList);
+    templatingengine::ValueHandler testValueList = std::make_shared<templatingengine::ValueList>(testValueStlList);
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["testList"] = testValueList;
@@ -144,7 +144,7 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
     testRendererChain.addRenderer(testVariableRendererPtr);
     testRendererChain.addRenderer(testLoopRendererPtr);
 
-    templatingengine::ValueBasePtr_t testOuterValuePtr =
+    templatingengine::ValueHandler testOuterValuePtr =
             std::make_shared<templatingengine::StringValue>("Outer String.");
     parameterSet["testListElement"] = testOuterValuePtr;
 
@@ -177,21 +177,21 @@ TEST_F(LoopRendererTest, TestNestedLoop) {
 
     templatingengine::ParameterSet parameterSet;
 
-    auto stlInnerValueList = std::list<templatingengine::ValueBasePtr_t>({
+    auto stlInnerValueList = std::list<templatingengine::ValueHandler>({
         std::make_shared<templatingengine::StringValue>("Inner String 1."),
         std::make_shared<templatingengine::StringValue>("Inner String 2."),
         std::make_shared<templatingengine::StringValue>("Inner String 3.")
     });
-    templatingengine::ValueBasePtr_t innerValueListPtr =
+    templatingengine::ValueHandler innerValueListPtr =
             std::make_shared<templatingengine::ValueList>(stlInnerValueList);
     parameterSet["innerValueList"] = innerValueListPtr;
 
-    auto stlOuterOpenValueList = std::list<templatingengine::ValueBasePtr_t>({
+    auto stlOuterOpenValueList = std::list<templatingengine::ValueHandler>({
         std::make_shared<templatingengine::StringValue>("Outer Opening String 1."),
         std::make_shared<templatingengine::StringValue>("Outer Opening String 2."),
         std::make_shared<templatingengine::StringValue>("Outer Opening String 3.")
     });
-    templatingengine::ValueBasePtr_t outerOpenValueListPtr =
+    templatingengine::ValueHandler outerOpenValueListPtr =
             std::make_shared<templatingengine::ValueList>(stlOuterOpenValueList);
     parameterSet["outerOpenValueList"] = outerOpenValueListPtr;
 

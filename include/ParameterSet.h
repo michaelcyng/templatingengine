@@ -11,7 +11,7 @@
 
 namespace templatingengine {
 
-    typedef std::unordered_map<std::string, ValueBasePtr_t> ParameterSet;
+    typedef std::unordered_map<std::string, ValueHandler> ParameterSet;
 
 }
 

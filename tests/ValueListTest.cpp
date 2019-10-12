@@ -19,7 +19,7 @@ protected:
 };
 
 TEST_F(ValueListTest, TestIterator) {
-    auto testStringValueList = std::list<templatingengine::ValueBasePtr_t>({
+    auto testStringValueList = std::list<templatingengine::ValueHandler>({
         std::make_shared<templatingengine::StringValue>("Test String 1"),
         std::make_shared<templatingengine::StringValue>("Test String 2")
     });
@@ -33,7 +33,7 @@ TEST_F(ValueListTest, TestIterator) {
 }
 
 TEST_F(ValueListTest, TestPrint) {
-    auto testStringValueList = std::list<templatingengine::ValueBasePtr_t>({
+    auto testStringValueList = std::list<templatingengine::ValueHandler>({
         std::make_shared<templatingengine::StringValue>("Test String 1"),
         std::make_shared<templatingengine::StringValue>("Test String 2")
     });

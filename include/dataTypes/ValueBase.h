@@ -19,7 +19,7 @@ namespace templatingengine {
     private:
     };
 
-    typedef std::shared_ptr<ValueBase> ValueBasePtr_t;
+    typedef std::shared_ptr<ValueBase> ValueHandler;
 }
 
 std::ostream& operator<<(std::ostream&, const templatingengine::ValueBase& value);

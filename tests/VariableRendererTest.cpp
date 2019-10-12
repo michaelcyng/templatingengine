@@ -46,7 +46,7 @@ TEST_F(VariableRendererTest, TestListVariableRender) {
     templatingengine::ParameterSet parameters;
     auto value1Ptr = std::make_shared<templatingengine::StringValue>("Value 1");
     auto value2Ptr = std::make_shared<templatingengine::StringValue>("Value 2");
-    parameters["listVar"] = std::make_shared<templatingengine::ValueList>(std::list<templatingengine::ValueBasePtr_t>(
+    parameters["listVar"] = std::make_shared<templatingengine::ValueList>(std::list<templatingengine::ValueHandler>(
             {value1Ptr, value2Ptr}));
     std::stringstream ss;
     testRenderer.render(ss, parameters);
