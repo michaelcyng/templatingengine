@@ -8,10 +8,11 @@
 #include <unordered_map>
 
 #include <dataTypes/ValueBase.h>
+#include <dataTypes/ValueHandler.h>
 
 namespace templatingengine {
 
-    typedef std::unordered_map<std::string, ValueBasePtr_t> ParameterSet;
+    typedef std::unordered_map<std::string, ValueHandler> ParameterSet;
 
 }
 

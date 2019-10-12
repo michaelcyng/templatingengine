@@ -9,9 +9,7 @@
 #include <tokens/PlainTextToken.h>
 #include <builders/RendererChainBuilder.h>
 #include <tokens/Token.h>
-#include <dataTypes/ValueList.h>
 #include <tokens/VariableToken.h>
-#include <dataTypes/StringValue.h>
 
 class RendererChainBuilderTest : public ::testing::Test {
 protected:
@@ -55,7 +53,7 @@ TEST_F(RendererChainBuilderTest, TestVariableToken) {
     templatingengine::RendererChainBuilder testBuilder;
     auto testRendererChainPtr = testBuilder.buildRendererChain(testTokenPtrList);
     templatingengine::ParameterSet parameterSet;
-    parameterSet["testVariable"] = std::make_shared<templatingengine::StringValue>("Variable text.");
+    parameterSet["testVariable"] = "Variable text.";
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);
 
@@ -85,13 +83,7 @@ TEST_F(RendererChainBuilderTest, TestLinearLoop) {
     auto testRendererChainPtr = testBuilder.buildRendererChain(tokenPtrList);
 
     templatingengine::ParameterSet parameterSet;
-    auto testStringValueList = std::list<templatingengine::ValueBasePtr_t>({
-        std::make_shared<templatingengine::StringValue>("Test String 1."),
-        std::make_shared<templatingengine::StringValue>("Test String 2."),
-        std::make_shared<templatingengine::StringValue>("Test String 3.")
-    });
-    templatingengine::ValueBasePtr_t valueListPtr = std::make_shared<templatingengine::ValueList>(testStringValueList);
-    parameterSet["valueList"] = valueListPtr;
+    parameterSet["valueList"] = {"Test String 1.", "Test String 2.", "Test String 3."};
 
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);
@@ -155,33 +147,11 @@ TEST_F(RendererChainBuilderTest, TestNestedLoop) {
     templatingengine::RendererChainBuilder testBuilder;
     auto testRendererChainPtr = testBuilder.buildRendererChain(tokenPtrList);
 
-    auto outerValueList = std::list<templatingengine::ValueBasePtr_t>({
-        std::make_shared<templatingengine::StringValue>("Outer element 1."),
-        std::make_shared<templatingengine::StringValue>("Outer element 2.")
-    });
-    templatingengine::ValueBasePtr_t outerValueListPtr = std::make_shared<templatingengine::ValueList>(outerValueList);
-
-    auto innerValueList1 = std::list<templatingengine::ValueBasePtr_t>({
-        std::make_shared<templatingengine::StringValue>("Inner loop 1 element 1."),
-        std::make_shared<templatingengine::StringValue>("Inner loop 1 element 2."),
-        std::make_shared<templatingengine::StringValue>("Inner loop 1 element 3.")
-    });
-    templatingengine::ValueBasePtr_t innerValueListPtr1 =
-            std::make_shared<templatingengine::ValueList>(innerValueList1);
-
-    auto innerValueList2 = std::list<templatingengine::ValueBasePtr_t>({
-        std::make_shared<templatingengine::StringValue>("Inner loop 2 element 1."),
-        std::make_shared<templatingengine::StringValue>("Inner loop 2 element 2."),
-        std::make_shared<templatingengine::StringValue>("Inner loop 2 element 3."),
-        std::make_shared<templatingengine::StringValue>("Inner loop 2 element 4.")
-    });
-    templatingengine::ValueBasePtr_t innerValueListPtr2 =
-            std::make_shared<templatingengine::ValueList>(innerValueList2);
-
     templatingengine::ParameterSet parameterSet;
-    parameterSet["outerValueList"] = outerValueListPtr;
-    parameterSet["innerValueList1"] = innerValueListPtr1;
-    parameterSet["innerValueList2"] = innerValueListPtr2;
+    parameterSet["outerValueList"] = {"Outer element 1.", "Outer element 2."};
+    parameterSet["innerValueList1"] = {"Inner loop 1 element 1.", "Inner loop 1 element 2.", "Inner loop 1 element 3."};
+    parameterSet["innerValueList2"] = {"Inner loop 2 element 1.", "Inner loop 2 element 2.", "Inner loop 2 element 3.",
+                                       "Inner loop 2 element 4."};
 
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);
@@ -222,12 +192,8 @@ TEST_F(RendererChainBuilderTest, TestMissingLoopClosingToken) {
     templatingengine::RendererChainBuilder testBuilder;
     auto testRendererChainPtr = testBuilder.buildRendererChain(tokenPtrList);
 
-    auto valuePtrList = {
-        std::make_shared<templatingengine::StringValue>("Value 1"),
-        std::make_shared<templatingengine::StringValue>("Value 2")
-    };
     templatingengine::ParameterSet parameterSet;
-    parameterSet["valueList"] = std::make_shared<templatingengine::ValueList>(valuePtrList);
+    parameterSet["valueList"] = {"Value 1", "Value 2"};
 
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);

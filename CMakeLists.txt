@@ -61,6 +61,9 @@ target_link_libraries(TokenListBuilderTest gtest gtest_main templatingengine)
 add_executable(TokenUtilsTest tests/TokenUtilsTest.cpp)
 target_link_libraries(TokenUtilsTest gtest gtest_main templatingengine)
 
+add_executable(ValueHandlerTest tests/ValueHandlerTest.cpp)
+target_link_libraries(ValueHandlerTest gtest gtest_main templatingengine)
+
 add_executable(ValueListTest tests/ValueListTest.cpp)
 target_link_libraries(ValueListTest gtest gtest_main templatingengine)
 

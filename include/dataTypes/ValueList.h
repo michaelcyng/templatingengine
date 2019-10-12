@@ -15,14 +15,19 @@ namespace templatingengine {
     typedef std::list<ValueBasePtr_t>    ValueBasePtrList_t;
     typedef ValueBasePtrList_t::iterator ValueBasePtrListIter_t;
 
+    class ValueHandler;
+
     class ValueList : public MultiValueBase {
     public:
 
         ValueList() = default;
+        explicit ValueList(const ValueHandler& valueHandler);
 
         template <typename ValueBaseContainer>
         explicit ValueList(const ValueBaseContainer& container) : myValueList(container.begin(), container.end()) {
         }
+
+        static ValueBasePtr_t makeList();
 
         ValueBasePtrListIter_t begin() noexcept;
         ValueBasePtrListIter_t end()   noexcept;

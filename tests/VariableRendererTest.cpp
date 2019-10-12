@@ -5,8 +5,6 @@
 #include <gtest/gtest.h>
 #include <list>
 
-#include <dataTypes/StringValue.h>
-#include <dataTypes/ValueList.h>
 #include <renderers/VariableRenderer.h>
 
 class VariableRendererTest : public ::testing::Test {
@@ -22,8 +20,8 @@ protected:
 TEST_F(VariableRendererTest, TestStringVariableRender) {
     templatingengine::VariableRenderer testRenderer("testVar");
     templatingengine::ParameterSet parameters;
-    parameters["testVar"] = std::make_shared<templatingengine::StringValue>("Test Value");
-    parameters["wrongVar"] = std::make_shared<templatingengine::StringValue>("Wrong Value");
+    parameters["testVar"] = "Test Value";
+    parameters["wrongVar"] = "Wrong Value";
     std::stringstream ss;
     testRenderer.render(ss, parameters);
 
@@ -33,8 +31,8 @@ TEST_F(VariableRendererTest, TestStringVariableRender) {
 TEST_F(VariableRendererTest, TestNonExistingVariable) {
     templatingengine::VariableRenderer testRenderer("nonExistingVar");
     templatingengine::ParameterSet parameters;
-    parameters["var1"] = std::make_shared<templatingengine::StringValue>("Value1");
-    parameters["var2"] = std::make_shared<templatingengine::StringValue>("Value2");
+    parameters["var1"] = "Value1";
+    parameters["var2"] = "Value2";
     std::stringstream ss;
     testRenderer.render(ss, parameters);
 
@@ -44,10 +42,7 @@ TEST_F(VariableRendererTest, TestNonExistingVariable) {
 TEST_F(VariableRendererTest, TestListVariableRender) {
     templatingengine::VariableRenderer testRenderer("listVar");
     templatingengine::ParameterSet parameters;
-    auto value1Ptr = std::make_shared<templatingengine::StringValue>("Value 1");
-    auto value2Ptr = std::make_shared<templatingengine::StringValue>("Value 2");
-    parameters["listVar"] = std::make_shared<templatingengine::ValueList>(std::list<templatingengine::ValueBasePtr_t>(
-            {value1Ptr, value2Ptr}));
+    parameters["listVar"] = {"Value 1", "Value 2"};
     std::stringstream ss;
     testRenderer.render(ss, parameters);
 

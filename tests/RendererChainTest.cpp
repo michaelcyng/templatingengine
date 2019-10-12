@@ -7,7 +7,6 @@
 
 #include <renderers/PlainTextRenderer.h>
 #include <renderers/RendererChain.h>
-#include <dataTypes/StringValue.h>
 #include <renderers/VariableRenderer.h>
 
 class RendererChainTest : public ::testing::Test {
@@ -49,8 +48,8 @@ TEST_F(RendererChainTest, TestLinearRendererChain) {
     testrendererChain.addRenderer(testRenderer5);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["sentence1"] = std::make_shared<templatingengine::StringValue>("This is sentence 2.");
-    parameterSet["sentence2"] = std::make_shared<templatingengine::StringValue>("Should not appear");
+    parameterSet["sentence1"] = "This is sentence 2.";
+    parameterSet["sentence2"] = "Should not appear";
 
     std::stringstream ss;
     testrendererChain.render(ss, parameterSet);
@@ -90,8 +89,8 @@ TEST_F(RendererChainTest, TestNestedRendererChain) {
     testOuterRendererChain.addRenderer(testOuterRenderer3);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["innerVar"] = std::make_shared<templatingengine::StringValue>("Inner variable renderer.");
-    parameterSet["outerVar"] = std::make_shared<templatingengine::StringValue>("Outer variable renderer.");
+    parameterSet["innerVar"] = "Inner variable renderer.";
+    parameterSet["outerVar"] = "Outer variable renderer.";
 
     std::stringstream ss;
     testOuterRendererChain.render(ss, parameterSet);

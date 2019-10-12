@@ -9,7 +9,7 @@ using namespace templatingengine;
 VariableRenderer::VariableRenderer(std::string name) : myName(std::move(name)) {
 }
 
-void VariableRenderer::render(std::ostream &os, const templatingengine::ParameterSet &parameters) const {
+void VariableRenderer::render(std::ostream &os, const ParameterSet &parameters) const {
     auto iter = parameters.find(myName);
 
     // Case 1: variable is not set

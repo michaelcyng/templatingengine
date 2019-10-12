@@ -6,9 +6,7 @@
 #include <sstream>
 
 #include <ParameterSet.h>
-#include <dataTypes/StringValue.h>
 #include <Template.h>
-#include <dataTypes/ValueList.h>
 
 class TemplateTest : public ::testing::Test {
 protected:
@@ -51,8 +49,8 @@ TEST_F(TemplateTest, TestTemplateWithVariables) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["variable1"] = std::make_shared<templatingengine::StringValue>("variable 1");
-    parameterSet["variable2"] = std::make_shared<templatingengine::StringValue>("variable 2");
+    parameterSet["variable1"] = "variable 1";
+    parameterSet["variable2"] = "variable 2";
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);
@@ -78,14 +76,9 @@ TEST_F(TemplateTest, TestTemplateWithLoop) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["header"] = std::make_shared<templatingengine::StringValue>("Hello!");
-    auto someArrayList = std::list<templatingengine::ValueBasePtr_t>({
-        std::make_shared<templatingengine::StringValue>("apple"),
-        std::make_shared<templatingengine::StringValue>("banana"),
-        std::make_shared<templatingengine::StringValue>("citrus")
-    });
-    parameterSet["somearray"] = std::make_shared<templatingengine::ValueList>(someArrayList);
-    parameterSet["footer"] = std::make_shared<templatingengine::StringValue>("That's it!");
+    parameterSet["header"] = "Hello!";
+    parameterSet["somearray"] = {"apple", "banana", "citrus"};
+    parameterSet["footer"] = "That's it!";
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);
@@ -120,17 +113,8 @@ TEST_F(TemplateTest, TestTemplateWithNestedLoop) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    auto outerList = std::list<templatingengine::ValueBasePtr_t>({
-        std::make_shared<templatingengine::StringValue>("outer value 1"),
-        std::make_shared<templatingengine::StringValue>("outer value 2")
-    });
-    parameterSet["outerList"] = std::make_shared<templatingengine::ValueList>(outerList);
-    auto innerList = std::list<templatingengine::ValueBasePtr_t>({
-        std::make_shared<templatingengine::StringValue>("inner value 1"),
-        std::make_shared<templatingengine::StringValue>("inner value 2"),
-        std::make_shared<templatingengine::StringValue>("inner value 3")
-    });
-    parameterSet["innerList"] = std::make_shared<templatingengine::ValueList>(innerList);
+    parameterSet["outerList"] = {"outer value 1", "outer value 2"};
+    parameterSet["innerList"] = {"inner value 1", "inner value 2", "inner value 3"};
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);
@@ -180,7 +164,7 @@ TEST_F(TemplateTest, TestEscapeCharacter) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["variable"] = std::make_shared<templatingengine::StringValue>("variable value here");
+    parameterSet["variable"] = "variable value here";
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);

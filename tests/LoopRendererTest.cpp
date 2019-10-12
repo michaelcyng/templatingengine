@@ -31,19 +31,12 @@ TEST_F(LoopRendererTest, TestSingleLoop) {
             std::make_shared<templatingengine::PlainTextRenderer>(".");
     testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
-    auto testValueStlList = std::list<templatingengine::ValueBasePtr_t>({
-        std::make_shared<templatingengine::StringValue>("Value 1"),
-        std::make_shared<templatingengine::StringValue>("Value 2"),
-        std::make_shared<templatingengine::StringValue>("Value 3")
-     });
-    templatingengine::ValueBasePtr_t testValueList = std::make_shared<templatingengine::ValueList>(testValueStlList);
-
     templatingengine::ParameterSet parameterSet;
-    parameterSet["testList"] = testValueList;
+    parameterSet["testList"] = {"Value 1", "Value 2", "Value 3"};
 
     templatingengine::LoopRenderer testLoopRender("testList",
-                                      "testListElement",
-                                               testRendererChainPtr);
+                                                  "testListElement",
+                                                  testRendererChainPtr);
     std::stringstream ss;
     testLoopRender.render(ss, parameterSet);
 
@@ -56,10 +49,8 @@ TEST_F(LoopRendererTest, TestEmptyList) {
     templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
     testRendererChainPtr->addRenderer(testRendererPtr1);
 
-    templatingengine::ValueBasePtr_t emptyValueListPtr = std::make_shared<templatingengine::ValueList>();
-
     templatingengine::ParameterSet parameterSet;
-    parameterSet["emptyList"] = emptyValueListPtr;
+    parameterSet["emptyList"] = templatingengine::ValueList::makeList();
 
     templatingengine::LoopRenderer testLoopRenderer("emptyList",
                                         "element",
@@ -76,7 +67,8 @@ TEST_F(LoopRendererTest, TestNonExistingList) {
     templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
     testRendererChainPtr->addRenderer(testRendererPtr1);
 
-    templatingengine::ValueBasePtr_t emptyValueListPtr = std::make_shared<templatingengine::ValueList>();
+    templatingengine::ValueHandler emptyValueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(
+            std::make_shared<templatingengine::ValueList>());
 
     templatingengine::ParameterSet parameterSet;
 
@@ -99,9 +91,8 @@ TEST_F(LoopRendererTest, TestSingleValueAsList) {
             std::make_shared<templatingengine::PlainTextRenderer>(".");
     testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
-    templatingengine::ValueBasePtr_t testSingleValuePtr = std::make_shared<templatingengine::StringValue>("Test String");
     templatingengine::ParameterSet parameterSet;
-    parameterSet["testList"] = testSingleValuePtr;
+    parameterSet["testList"] = "Test String";
 
     templatingengine::LoopRenderer testLoopRenderer("testList",
                                                   "testListElement",
@@ -122,15 +113,8 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
             std::make_shared<templatingengine::PlainTextRenderer>(".");
     testLoopRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
-    auto testValueStlList =
-            std::list<templatingengine::ValueBasePtr_t>({
-                std::make_shared<templatingengine::StringValue>("Inner String 1"),
-                std::make_shared<templatingengine::StringValue>("Inner String 2"),
-                std::make_shared<templatingengine::StringValue>("Inner String 3")});
-    templatingengine::ValueBasePtr_t testValueList = std::make_shared<templatingengine::ValueList>(testValueStlList);
-
     templatingengine::ParameterSet parameterSet;
-    parameterSet["testList"] = testValueList;
+    parameterSet["testList"] = {"Inner String 1", "Inner String 2", "Inner String 3"};
 
     templatingengine::RendererBasePtr_t testLoopRendererPtr =
             std::make_shared<templatingengine::LoopRenderer>("testList",
@@ -144,10 +128,7 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
     testRendererChain.addRenderer(testVariableRendererPtr);
     testRendererChain.addRenderer(testLoopRendererPtr);
 
-    templatingengine::ValueBasePtr_t testOuterValuePtr =
-            std::make_shared<templatingengine::StringValue>("Outer String.");
-    parameterSet["testListElement"] = testOuterValuePtr;
-
+    parameterSet["testListElement"] = "Outer String.";
     std::stringstream ss;
     testRendererChain.render(ss, parameterSet);
 
@@ -176,24 +157,9 @@ TEST_F(LoopRendererTest, TestNestedLoop) {
                                                      outerLoopRendererChainPtr);
 
     templatingengine::ParameterSet parameterSet;
-
-    auto stlInnerValueList = std::list<templatingengine::ValueBasePtr_t>({
-        std::make_shared<templatingengine::StringValue>("Inner String 1."),
-        std::make_shared<templatingengine::StringValue>("Inner String 2."),
-        std::make_shared<templatingengine::StringValue>("Inner String 3.")
-    });
-    templatingengine::ValueBasePtr_t innerValueListPtr =
-            std::make_shared<templatingengine::ValueList>(stlInnerValueList);
-    parameterSet["innerValueList"] = innerValueListPtr;
-
-    auto stlOuterOpenValueList = std::list<templatingengine::ValueBasePtr_t>({
-        std::make_shared<templatingengine::StringValue>("Outer Opening String 1."),
-        std::make_shared<templatingengine::StringValue>("Outer Opening String 2."),
-        std::make_shared<templatingengine::StringValue>("Outer Opening String 3.")
-    });
-    templatingengine::ValueBasePtr_t outerOpenValueListPtr =
-            std::make_shared<templatingengine::ValueList>(stlOuterOpenValueList);
-    parameterSet["outerOpenValueList"] = outerOpenValueListPtr;
+    parameterSet["innerValueList"] = {"Inner String 1.", "Inner String 2.", "Inner String 3."};
+    parameterSet["outerOpenValueList"] = {"Outer Opening String 1.", "Outer Opening String 2.",
+                                          "Outer Opening String 3."};
 
     std::stringstream ss;
     outerLoopRenderer.render(ss, parameterSet);

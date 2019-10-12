@@ -2,9 +2,18 @@
 // Created by Cho Yiu Ng on 07.10.19.
 //
 
+#include <dataTypes/ValueHandler.h>
 #include <dataTypes/ValueList.h>
 
 using namespace templatingengine;
+
+ValueList::ValueList(const ValueHandler &valueHandler):
+ValueList(std::static_pointer_cast<ValueList>(static_cast<ValueBasePtr_t>(valueHandler))->myValueList) {
+}
+
+ValueBasePtr_t ValueList::makeList() {
+    return std::static_pointer_cast<ValueBase>(std::make_shared<ValueList>());
+}
 
 ValueBasePtrListIter_t ValueList::begin() noexcept {
     return myValueList.begin();
