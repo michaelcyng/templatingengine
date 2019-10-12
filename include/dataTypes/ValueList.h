@@ -12,7 +12,7 @@
 namespace templatingengine {
 
 
-    typedef std::list<ValueHandler>    ValueBasePtrList_t;
+    typedef std::list<ValueBasePtr_t>    ValueBasePtrList_t;
     typedef ValueBasePtrList_t::iterator ValueBasePtrListIter_t;
 
     class ValueList : public MultiValueBase {
