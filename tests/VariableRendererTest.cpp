@@ -22,8 +22,8 @@ protected:
 TEST_F(VariableRendererTest, TestStringVariableRender) {
     templatingengine::VariableRenderer testRenderer("testVar");
     templatingengine::ParameterSet parameters;
-    parameters["testVar"] = templatingengine::ValueHandler("Test Value");
-    parameters["wrongVar"] = templatingengine::ValueHandler("Wrong Value");
+    parameters["testVar"] = "Test Value";
+    parameters["wrongVar"] = "Wrong Value";
     std::stringstream ss;
     testRenderer.render(ss, parameters);
 
@@ -33,8 +33,8 @@ TEST_F(VariableRendererTest, TestStringVariableRender) {
 TEST_F(VariableRendererTest, TestNonExistingVariable) {
     templatingengine::VariableRenderer testRenderer("nonExistingVar");
     templatingengine::ParameterSet parameters;
-    parameters["var1"] = templatingengine::ValueHandler("Value1");
-    parameters["var2"] = templatingengine::ValueHandler("Value2");
+    parameters["var1"] = "Value1";
+    parameters["var2"] = "Value2";
     std::stringstream ss;
     testRenderer.render(ss, parameters);
 

@@ -51,8 +51,8 @@ TEST_F(TemplateTest, TestTemplateWithVariables) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["variable1"] = templatingengine::ValueHandler("variable 1");
-    parameterSet["variable2"] = templatingengine::ValueHandler("variable 2");
+    parameterSet["variable1"] = "variable 1";
+    parameterSet["variable2"] = "variable 2";
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);
@@ -78,9 +78,9 @@ TEST_F(TemplateTest, TestTemplateWithLoop) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["header"] = templatingengine::ValueHandler("Hello!");
+    parameterSet["header"] = "Hello!";
     parameterSet["somearray"] = std::list<std::string>({"apple", "banana", "citrus"});
-    parameterSet["footer"] = templatingengine::ValueHandler("That's it!");
+    parameterSet["footer"] = "That's it!";
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);
@@ -166,7 +166,7 @@ TEST_F(TemplateTest, TestEscapeCharacter) {
     templatingengine::Template testTemplate(templateStream);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["variable"] = templatingengine::ValueHandler("variable value here");
+    parameterSet["variable"] = "variable value here";
 
     std::stringstream resultStream;
     testTemplate.generateDocument(parameterSet, resultStream);

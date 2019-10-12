@@ -17,6 +17,7 @@ namespace templatingengine {
     public:
 
         ValueHandler() = default;
+        ValueHandler(const char* value);
         ValueHandler(const std::string& value); // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
         ValueHandler(ValueBasePtr_t valuePtr); // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
 
@@ -24,7 +25,8 @@ namespace templatingengine {
         const ValueBasePtr_t& operator->() const;
         ValueBase&            operator*();
 
-        template <typename Container>
+        template <typename Container,
+                  std::enable_if_t<std::is_convertible<typename Container::value_type, ValueHandler>::value, int> = 0>
         ValueHandler& operator=(const Container& valueContainer) {
             std::list<ValueHandler> valueHandlerList;
             for (const auto& value: valueContainer) {
@@ -33,6 +35,8 @@ namespace templatingengine {
             myValuePtr = std::static_pointer_cast<ValueBase>(std::make_shared<ValueList>(valueHandlerList));
             return *this;
         }
+
+        ValueHandler& operator=(const ValueHandler& value);
 
         operator const ValueBasePtr_t&() const { return myValuePtr; } // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
         operator ValueBasePtr_t&() { return myValuePtr; } // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)

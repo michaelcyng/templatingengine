@@ -31,21 +31,12 @@ TEST_F(LoopRendererTest, TestSingleLoop) {
             std::make_shared<templatingengine::PlainTextRenderer>(".");
     testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
-    /*auto testValueStlList = std::list<templatingengine::ValueHandler>({
-        templatingengine::ValueHandler("Value 1"),
-        templatingengine::ValueHandler("Value 2"),
-        templatingengine::ValueHandler("Value 3")
-     });
-    templatingengine::ValueHandler testValueList = std::static_pointer_cast<templatingengine::ValueBase>(
-            std::make_shared<templatingengine::ValueList>(testValueStlList));*/
-
     templatingengine::ParameterSet parameterSet;
-    //parameterSet["testList"] = testValueList;
     parameterSet["testList"] = std::list<std::string>({"Value 1", "Value 2", "Value 3"});
 
     templatingengine::LoopRenderer testLoopRender("testList",
-                                      "testListElement",
-                                               testRendererChainPtr);
+                                                  "testListElement",
+                                                  testRendererChainPtr);
     std::stringstream ss;
     testLoopRender.render(ss, parameterSet);
 
@@ -104,7 +95,7 @@ TEST_F(LoopRendererTest, TestSingleValueAsList) {
 
     templatingengine::ValueHandler testSingleValuePtr("Test String");
     templatingengine::ParameterSet parameterSet;
-    parameterSet["testList"] = testSingleValuePtr;
+    parameterSet["testList"] = "Test String";
 
     templatingengine::LoopRenderer testLoopRenderer("testList",
                                                   "testListElement",
@@ -125,16 +116,8 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
             std::make_shared<templatingengine::PlainTextRenderer>(".");
     testLoopRendererChainPtr->addRenderer(testPlainTextRendererPtr);
 
-    auto testValueStlList =
-            std::list<templatingengine::ValueHandler>({
-                templatingengine::ValueHandler("Inner String 1"),
-                templatingengine::ValueHandler("Inner String 2"),
-                templatingengine::ValueHandler("Inner String 3")});
-    templatingengine::ValueHandler testValueList = std::static_pointer_cast<templatingengine::ValueBase>(
-            std::make_shared<templatingengine::ValueList>(testValueStlList));
-
     templatingengine::ParameterSet parameterSet;
-    parameterSet["testList"] = testValueList;
+    parameterSet["testList"] = std::list<std::string>({"Inner String 1", "Inner String 2", "Inner String 3"});
 
     templatingengine::RendererBasePtr_t testLoopRendererPtr =
             std::make_shared<templatingengine::LoopRenderer>("testList",
@@ -148,9 +131,7 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
     testRendererChain.addRenderer(testVariableRendererPtr);
     testRendererChain.addRenderer(testLoopRendererPtr);
 
-    templatingengine::ValueHandler testOuterValuePtr("Outer String.");
-    parameterSet["testListElement"] = testOuterValuePtr;
-
+    parameterSet["testListElement"] = "Outer String.";
     std::stringstream ss;
     testRendererChain.render(ss, parameterSet);
 
@@ -179,24 +160,10 @@ TEST_F(LoopRendererTest, TestNestedLoop) {
                                                      outerLoopRendererChainPtr);
 
     templatingengine::ParameterSet parameterSet;
-
-    auto stlInnerValueList = std::list<templatingengine::ValueHandler>({
-        templatingengine::ValueHandler("Inner String 1."),
-        templatingengine::ValueHandler("Inner String 2."),
-        templatingengine::ValueHandler("Inner String 3.")
-    });
-    templatingengine::ValueHandler innerValueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(
-            std::make_shared<templatingengine::ValueList>(stlInnerValueList));
-    parameterSet["innerValueList"] = innerValueListPtr;
-
-    auto stlOuterOpenValueList = std::list<templatingengine::ValueHandler>({
-        templatingengine::ValueHandler("Outer Opening String 1."),
-        templatingengine::ValueHandler("Outer Opening String 2."),
-        templatingengine::ValueHandler("Outer Opening String 3.")
-    });
-    templatingengine::ValueHandler outerOpenValueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(
-            std::make_shared<templatingengine::ValueList>(stlOuterOpenValueList));
-    parameterSet["outerOpenValueList"] = outerOpenValueListPtr;
+    parameterSet["innerValueList"] =
+            std::list<std::string>({"Inner String 1.", "Inner String 2.", "Inner String 3."});
+    parameterSet["outerOpenValueList"] =
+            std::list<std::string>({"Outer Opening String 1.", "Outer Opening String 2.", "Outer Opening String 3."});
 
     std::stringstream ss;
     outerLoopRenderer.render(ss, parameterSet);

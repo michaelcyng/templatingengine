@@ -7,6 +7,9 @@
 
 using namespace templatingengine;
 
+ValueHandler::ValueHandler(const char* value): ValueHandler(std::string(value)) {
+}
+
 ValueHandler::ValueHandler(const std::string& value): myValuePtr(std::make_shared<StringValue>(value)) {
 }
 
@@ -23,4 +26,12 @@ const ValueBasePtr_t& ValueHandler::operator->() const {
 
 ValueBase& ValueHandler::operator*() {
     return *myValuePtr;
+}
+
+ValueHandler& ValueHandler::operator=(const ValueHandler &value) {
+    if (this == &value) {
+        return *this;
+    }
+    myValuePtr = value.myValuePtr;
+    return *this;
 }
