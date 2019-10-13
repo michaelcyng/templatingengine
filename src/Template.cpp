@@ -29,6 +29,5 @@ RendererChainPtr_t Template::compile(std::istream &inputStream) {
     TokenListBuilder tokenListBuilder;
     auto tokenPtrList = tokenListBuilder.buildTokenPtrList(tokenTextList);
 
-    RendererChainBuilder rendererChainBuilder;
-    return rendererChainBuilder.buildRendererChain(tokenPtrList);
+    return RendererChainBuilder::buildRendererChain(tokenPtrList);
 }

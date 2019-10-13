@@ -17,20 +17,21 @@
 
 using namespace templatingengine;
 
-RendererChainBuilder::RendererChainBuilder(): myStandaloneRendererBuilderMap({
+const RendererChainBuilder::StandaloneRendererBuilderMap_t RendererChainBuilder::ourStandaloneRendererBuilderMap({
     {TokenType_t::PlainText_e, &RendererChainBuilder::buildPlainTextRenderer},
-    {TokenType_t::Variable_e, &RendererChainBuilder::buildVariableRenderer}
-}), myNonStandaloneRendererBuilderMap({
-    {TokenType_t::LoopOpen_e, &RendererChainBuilder::buildLoopRenderer}
-}){
-}
+    {TokenType_t::Variable_e,  &RendererChainBuilder::buildVariableRenderer}
+});
 
-RendererChainPtr_t RendererChainBuilder::buildRendererChain(const TokenPtrList_t& tokenPtrList) const {
+const RendererChainBuilder::NonStandaloneRendererBuilderMap_t RendererChainBuilder::ourNonStandaloneRendererBuilderMap({
+    {TokenType_t::LoopOpen_e, &RendererChainBuilder::buildLoopRenderer}
+});
+
+RendererChainPtr_t RendererChainBuilder::buildRendererChain(const TokenPtrList_t& tokenPtrList) {
     return buildRendererChain(tokenPtrList.begin(), tokenPtrList.end());
 }
 
 RendererChainPtr_t RendererChainBuilder::buildRendererChain(const TokenPtrListConstIter_t &begin,
-                                                            const TokenPtrListConstIter_t &end) const {
+                                                            const TokenPtrListConstIter_t &end) {
     RendererChainPtr_t rendererChainPtr = std::make_shared<RendererChain>();
 
     for (TokenPtrListConstIter_t tokenIter = begin; tokenIter != end;) {
@@ -63,27 +64,27 @@ RendererChainPtr_t RendererChainBuilder::buildRendererChain(const TokenPtrListCo
     return rendererChainPtr;
 }
 
-RendererBasePtr_t RendererChainBuilder::buildRenderer(const TokenBasePtr_t& tokenPtr) const {
-    auto builderFunctor = myStandaloneRendererBuilderMap.at(tokenPtr->getTokenType());
-    return (this->*builderFunctor)(tokenPtr);
+RendererBasePtr_t RendererChainBuilder::buildRenderer(const TokenBasePtr_t& tokenPtr) {
+    auto builderFunctor = ourStandaloneRendererBuilderMap.at(tokenPtr->getTokenType());
+    return builderFunctor(tokenPtr);
 }
 
-RendererBasePtr_t RendererChainBuilder::buildPlainTextRenderer(const TokenBasePtr_t& tokenPtr) const {
+RendererBasePtr_t RendererChainBuilder::buildPlainTextRenderer(const TokenBasePtr_t& tokenPtr) {
     return std::make_shared<PlainTextRenderer>(std::static_pointer_cast<PlainTextToken>(tokenPtr)->getText());
 }
 
-RendererBasePtr_t RendererChainBuilder::buildVariableRenderer(const TokenBasePtr_t& tokenPtr) const {
+RendererBasePtr_t RendererChainBuilder::buildVariableRenderer(const TokenBasePtr_t& tokenPtr) {
     return std::make_shared<VariableRenderer>(std::static_pointer_cast<VariableToken>(tokenPtr)->getVariableName());
 }
 
 RendererBasePtr_t RendererChainBuilder::buildRenderer(const TokenPtrListConstIter_t& begin,
-                                                      const TokenPtrListConstIter_t& end) const {
-    auto builderFunctor = myNonStandaloneRendererBuilderMap.at((*begin)->getTokenType());
-    return (this->*builderFunctor)(begin, end);
+                                                      const TokenPtrListConstIter_t& end) {
+    auto builderFunctor = ourNonStandaloneRendererBuilderMap.at((*begin)->getTokenType());
+    return builderFunctor(begin, end);
 }
 
 RendererBasePtr_t RendererChainBuilder::buildLoopRenderer(const TokenPtrListConstIter_t& begin,
-                                                          const TokenPtrListConstIter_t& end) const {
+                                                          const TokenPtrListConstIter_t& end) {
     auto loopContentBegin = begin;
     ++loopContentBegin;
     auto loopContentPtr = buildRendererChain(loopContentBegin, end);
@@ -94,6 +95,6 @@ RendererBasePtr_t RendererChainBuilder::buildLoopRenderer(const TokenPtrListCons
     return loopRenderPtr;
 }
 
-RendererBasePtr_t RendererChainBuilder::buildFallbackRenderer(const std::string &rawTokenText) const {
+RendererBasePtr_t RendererChainBuilder::buildFallbackRenderer(const std::string &rawTokenText) {
     return std::make_shared<PlainTextRenderer>(rawTokenText);
 }
