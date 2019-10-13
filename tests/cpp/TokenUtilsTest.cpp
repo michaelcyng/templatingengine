@@ -132,8 +132,3 @@ TEST_F(TokenUtilsTest, TestIsVariableCommand) {
     ASSERT_FALSE(templatingengine::TokenUtils::isVariableCommand("/LOOP"));
     ASSERT_TRUE(templatingengine::TokenUtils::isVariableCommand(""));
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

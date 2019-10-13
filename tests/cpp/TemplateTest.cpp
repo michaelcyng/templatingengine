@@ -175,8 +175,3 @@ TEST_F(TemplateTest, TestEscapeCharacter) {
             "No characters are escaped: \\a\\}\\";
     ASSERT_EQ(resultStream.str(), expectedText);
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

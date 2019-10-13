@@ -116,8 +116,3 @@ TEST_F(TokenListBuilderTest, TestBuildTokenPtrList) {
     ASSERT_EQ(tokenPtr1->getTokenType(), templatingengine::TokenType_t::LoopClose_e);
 }
 
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
-

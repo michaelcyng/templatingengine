@@ -45,8 +45,3 @@ TEST_F(ValueListTest, TestPrint) {
     ss << testValueList;
     ASSERT_EQ(ss.str(), "[Test String 1, Test String 2]");
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

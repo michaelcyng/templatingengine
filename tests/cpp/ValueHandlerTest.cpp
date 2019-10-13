@@ -59,8 +59,3 @@ TEST_F(ValueHandlerTest, TestStringListAssignment) {
     ASSERT_EQ(valueList, std::list<std::string>({"string 5", "string 6"}));
 
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

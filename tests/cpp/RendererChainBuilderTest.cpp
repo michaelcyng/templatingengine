@@ -201,7 +201,3 @@ TEST_F(RendererChainBuilderTest, TestMissingLoopClosingToken) {
     ASSERT_EQ(ss.str(), "{{#LOOP valueList element}}{{element}}Plain Text");
 }
 
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
