@@ -20,17 +20,13 @@ protected:
 };
 
 TEST_F(TokenListBuilderTest, TestPlainTextTokenBuild) {
-    templatingengine::TokenListBuilder testBuilder;
-
-    auto tokenPtr = testBuilder.buildToken("Plain Text");
+    auto tokenPtr = templatingengine::TokenListBuilder::buildToken("Plain Text");
     ASSERT_EQ(tokenPtr->getTokenType(), templatingengine::TokenType_t::PlainText_e);
     ASSERT_EQ(std::static_pointer_cast<templatingengine::PlainTextToken>(tokenPtr)->getText(), "Plain Text");
 }
 
 TEST_F(TokenListBuilderTest, TestVariableTokenBuild) {
-    templatingengine::TokenListBuilder testBuilder;
-
-    auto tokenPtr = testBuilder.buildToken("{{ variable\t\t}}");
+    auto tokenPtr = templatingengine::TokenListBuilder::buildToken("{{ variable\t\t}}");
     ASSERT_EQ(tokenPtr->getTokenType(), templatingengine::TokenType_t::Variable_e);
     ASSERT_EQ(std::static_pointer_cast<templatingengine::VariableToken>(tokenPtr)->getVariableName(),
               "variable");
@@ -38,41 +34,35 @@ TEST_F(TokenListBuilderTest, TestVariableTokenBuild) {
 }
 
 TEST_F(TokenListBuilderTest, TestLoopOpeningTokenBuild) {
-    templatingengine::TokenListBuilder testBuilder;
-
-    auto tokenPtr = testBuilder.buildToken("{{\t#LOOP  valueList  \t\telement }}");
+    auto tokenPtr = templatingengine::TokenListBuilder::buildToken("{{\t#LOOP  valueList  \t\telement }}");
     ASSERT_EQ(tokenPtr->getTokenType(), templatingengine::TokenType_t::LoopOpen_e);
     ASSERT_EQ(std::static_pointer_cast<templatingengine::LoopOpeningToken>(tokenPtr)->getValueListName(),
               "valueList");
     ASSERT_EQ(std::static_pointer_cast<templatingengine::LoopOpeningToken>(tokenPtr)->getElementName(),
               "element");
 
-    auto tokenPtr1 = testBuilder.buildToken("{{#LOOP}}");
+    auto tokenPtr1 = templatingengine::TokenListBuilder::buildToken("{{#LOOP}}");
     ASSERT_EQ(tokenPtr1->getTokenType(), templatingengine::TokenType_t::PlainText_e);
     ASSERT_EQ(std::static_pointer_cast<templatingengine::PlainTextToken>(tokenPtr1)->getText(), "{{#LOOP}}");
 
-    auto tokenPtr2 = testBuilder.buildToken("{{#LOOP valueList}}");
+    auto tokenPtr2 = templatingengine::TokenListBuilder::buildToken("{{#LOOP valueList}}");
     ASSERT_EQ(tokenPtr2->getTokenType(), templatingengine::TokenType_t::PlainText_e);
     ASSERT_EQ(std::static_pointer_cast<templatingengine::PlainTextToken>(tokenPtr2)->getText(),
              "{{#LOOP valueList}}");
 
-    auto tokenPtr3 = testBuilder.buildToken("{{#LOOP valueList element something else}}");
+    auto tokenPtr3 = templatingengine::TokenListBuilder::buildToken("{{#LOOP valueList element something else}}");
     ASSERT_EQ(tokenPtr3->getTokenType(), templatingengine::TokenType_t::PlainText_e);
     ASSERT_EQ(std::static_pointer_cast<templatingengine::PlainTextToken>(tokenPtr3)->getText(),
               "{{#LOOP valueList element something else}}");
 }
 
 TEST_F(TokenListBuilderTest, TestLoopClosingTokenBuild) {
-    templatingengine::TokenListBuilder testBuilder;
-
-    auto tokenPtr = testBuilder.buildToken("{{/LOOP}}");
+    auto tokenPtr = templatingengine::TokenListBuilder::buildToken("{{/LOOP}}");
     ASSERT_EQ(tokenPtr->getTokenType(), templatingengine::TokenType_t::LoopClose_e);
 }
 
 TEST_F(TokenListBuilderTest, TestUnrecognizedTokenBuild) {
-    templatingengine::TokenListBuilder testBuilder;
-
-    auto tokenPtr = testBuilder.buildToken("{{#Unrecognizable command}}");
+    auto tokenPtr = templatingengine::TokenListBuilder::buildToken("{{#Unrecognizable command}}");
     ASSERT_EQ(tokenPtr->getTokenType(), templatingengine::TokenType_t::PlainText_e);
     ASSERT_EQ(tokenPtr->getRawTokenText(), "{{#Unrecognizable command}}");
     ASSERT_EQ(std::static_pointer_cast<templatingengine::PlainTextToken>(tokenPtr)->getText(),
@@ -87,8 +77,7 @@ TEST_F(TokenListBuilderTest, TestBuildTokenPtrList) {
         "{{/LOOP}}"
     };
 
-    templatingengine::TokenListBuilder testBuilder;
-    auto tokenPtrList = testBuilder.buildTokenPtrList(tokenTextList);
+    auto tokenPtrList = templatingengine::TokenListBuilder::buildTokenPtrList(tokenTextList);
     ASSERT_EQ(tokenPtrList.size(), tokenTextList.size());
 
     auto tokenPtrIter = tokenPtrList.begin();
