@@ -103,8 +103,3 @@ TEST_F(RendererChainTest, TestNestedRendererChain) {
                               "Second outer plain text renderer.");
 
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

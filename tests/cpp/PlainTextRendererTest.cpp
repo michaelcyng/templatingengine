@@ -32,8 +32,3 @@ TEST_F(PlainTextRendererTest, TestAppend) {
 
     ASSERT_EQ(ss.str(), testString);
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

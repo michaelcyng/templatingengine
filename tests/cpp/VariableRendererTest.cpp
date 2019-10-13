@@ -48,8 +48,3 @@ TEST_F(VariableRendererTest, TestListVariableRender) {
 
     ASSERT_EQ(ss.str(), "[Value 1, Value 2]");
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

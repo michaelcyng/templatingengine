@@ -60,9 +60,3 @@ TEST_F(EscapeStreamTest, TestEscapeCharacter) {
     ASSERT_FALSE(ch.isEscaped());
     ASSERT_EQ(ch.get(), '\\');
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
-

@@ -211,31 +211,27 @@ The source code consists of the following directories:
 |`tests`  | Source files for unit tests                                                |
 
 ##Build
-Cmake file is provided for building the static library `libtemplatingengine.a` and the
-executables of the unit tests. This requires cmake version 2.8.2 or above. In order to
-build the templating engine library and the unit tests, use the following command
-```
-cmake --build <build directory> --target all -- -j 4
-```
-All the build artifacts are then generated into the `<build directory>`. If you only want to
-build the library, invoke the following command
-```
-cmake --build <build directory> --target templatingengine -- -j 4
-```
-Similarly, you can replace `templatingengine` above by the name of the unit test executable
-name to build a particular unit test executable.
-
-Finally, the following command is used for clearing up the build directory:
-```
-cmake --build <build directory> --target clean -- -j 4
-``` 
+CMake file is provided for building the static library `libtemplatingengine.a` and the
+executables of the unit tests. This requires CMake version 2.8.2 or above. The
+build target for the templating engine library is `templatingengine` and
+the built static library file is written to `lib` directory inside the
+build directory. The build target for the unit test executable is `TemplatingEngineUnitTest`, 
+which is stored under the `bin` directory inside the build directory.
 
 ##Testing
+###Unit Tests
 Unit tests are implemented in the sources in the source directory `tests`. The adopted
-testing framework is the [Google test](https://github.com/google/googletest). One executable
-corresponds to the unit test of one class. You can directly run the executable to run all
-the tests of that class or use the `--gtest_filter` to select a subset of tests to be run.
-Details can be found by using the `-h` parameter of the unit test executable.
+testing framework is the [Google test](https://github.com/google/googletest). You can directly run the executable to 
+run all the tests or use the `--gtest_filter` to select a subset of tests to be run. For example, since 
+all unit tests of a particular class belongs to the same fixture, one can use the parameter 
+`--gtest_filter=<Target class name>Test.*` to run all the tests of that class. Details can be found by using the `-h` 
+parameter of the unit test executable. You do not need to install Google test by yourself before building the tests but 
+the CMake automatically downloads the source files for you.
 
-You do not need to install Google test by yourself before building the tests but the cmake
-automatically downloads the source files for you. 
+The source files of the unit tests can be found in the directory `tests/cpp`. Each cpp file comprises of the
+unit test fixture of the corresponding class.
+
+###Tests for Multiple Platforms
+In order to ensure the templating engine library compiles and runs properly in
+multiple platforms, docker files for various platforms are defined so that one
+can perform the tests of multiple platforms on one machine. 

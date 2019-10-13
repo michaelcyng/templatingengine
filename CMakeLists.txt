@@ -31,41 +31,13 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
 include_directories("${gtest_SOURCE_DIR}/include")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
 file(GLOB_RECURSE templatingenginesrc ${CMAKE_CURRENT_SOURCE_DIR}/src *.cpp)
 add_library(templatingengine STATIC ${templatingenginesrc})
 
-add_executable(EscapeStreamTest tests/EscapeStreamTest.cpp)
-target_link_libraries(EscapeStreamTest gtest gtest_main templatingengine)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_executable(LoopRendererTest tests/LoopRendererTest.cpp)
-target_link_libraries(LoopRendererTest gtest gtest_main templatingengine)
-
-add_executable(PlainTextRendererTest tests/PlainTextRendererTest.cpp)
-target_link_libraries(PlainTextRendererTest gtest gtest_main templatingengine)
-
-add_executable(RendererChainTest tests/RendererChainTest.cpp)
-target_link_libraries(RendererChainTest gtest gtest_main templatingengine)
-
-add_executable(RendererChainBuilderTest tests/RendererChainBuilderTest.cpp)
-target_link_libraries(RendererChainBuilderTest gtest gtest_main templatingengine)
-
-add_executable(TemplateTest tests/TemplateTest.cpp)
-target_link_libraries(TemplateTest gtest gtest_main templatingengine)
-
-add_executable(TemplateTokenizerTest tests/TemplateTokenizerTest.cpp)
-target_link_libraries(TemplateTokenizerTest gtest gtest_main templatingengine)
-
-add_executable(TokenListBuilderTest tests/TokenListBuilderTest.cpp)
-target_link_libraries(TokenListBuilderTest gtest gtest_main templatingengine)
-
-add_executable(TokenUtilsTest tests/TokenUtilsTest.cpp)
-target_link_libraries(TokenUtilsTest gtest gtest_main templatingengine)
-
-add_executable(ValueHandlerTest tests/ValueHandlerTest.cpp)
-target_link_libraries(ValueHandlerTest gtest gtest_main templatingengine)
-
-add_executable(ValueListTest tests/ValueListTest.cpp)
-target_link_libraries(ValueListTest gtest gtest_main templatingengine)
-
-add_executable(VariableRendererTest tests/VariableRendererTest.cpp)
-target_link_libraries(VariableRendererTest gtest gtest_main templatingengine)
+file(GLOB unittestsrc ${CMAKE_CURRENT_SOURCE_DIR}/tests/cpp/*.cpp)
+add_executable(TemplatingEngineUnitTest ${unittestsrc})
+target_link_libraries(TemplatingEngineUnitTest gtest gtest_main templatingengine)
