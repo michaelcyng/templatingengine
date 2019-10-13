@@ -23,8 +23,7 @@ protected:
 
 TEST_F(RendererChainBuilderTest, TestEmptyTokenChain) {
     templatingengine::TokenPtrList_t emptyTokenPtrList;
-    templatingengine::RendererChainBuilder testBuilder;
-    auto testRendererChainPtr = testBuilder.buildRendererChain(emptyTokenPtrList);
+    auto testRendererChainPtr = templatingengine::RendererChainBuilder::buildRendererChain(emptyTokenPtrList);
     templatingengine::ParameterSet parameterSet;
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);
@@ -36,8 +35,7 @@ TEST_F(RendererChainBuilderTest, TestPlainTextTokens) {
     templatingengine::TokenBasePtr_t testToken1 = std::make_shared<templatingengine::PlainTextToken>("Plain text 1.");
     templatingengine::TokenBasePtr_t testToken2 = std::make_shared<templatingengine::PlainTextToken>("Plain text 2.");
     templatingengine::TokenPtrList_t testTokenPtrList { testToken1, testToken2 };
-    templatingengine::RendererChainBuilder testBuilder;
-    auto testRendererChainPtr = testBuilder.buildRendererChain(testTokenPtrList);
+    auto testRendererChainPtr = templatingengine::RendererChainBuilder::buildRendererChain(testTokenPtrList);
     templatingengine::ParameterSet parameterSet;
     std::stringstream ss;
     testRendererChainPtr->render(ss, parameterSet);
@@ -50,8 +48,7 @@ TEST_F(RendererChainBuilderTest, TestVariableToken) {
             std::make_shared<templatingengine::VariableToken>("{{testVariable}}", "testVariable");
     templatingengine::TokenBasePtr_t testToken2 = std::make_shared<templatingengine::PlainTextToken>("Plain text.");
     templatingengine::TokenPtrList_t testTokenPtrList { testToken1, testToken2 };
-    templatingengine::RendererChainBuilder testBuilder;
-    auto testRendererChainPtr = testBuilder.buildRendererChain(testTokenPtrList);
+    auto testRendererChainPtr = templatingengine::RendererChainBuilder::buildRendererChain(testTokenPtrList);
     templatingengine::ParameterSet parameterSet;
     parameterSet["testVariable"] = "Variable text.";
     std::stringstream ss;
@@ -79,8 +76,7 @@ TEST_F(RendererChainBuilderTest, TestLinearLoop) {
                                                     innerToken1, innerToken2, innerToken3,
                                                     loopClosingToken,
                                                     outerToken2 };
-    templatingengine::RendererChainBuilder testBuilder;
-    auto testRendererChainPtr = testBuilder.buildRendererChain(tokenPtrList);
+    auto testRendererChainPtr = templatingengine::RendererChainBuilder::buildRendererChain(tokenPtrList);
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["valueList"] = {"Test String 1.", "Test String 2.", "Test String 3."};
@@ -144,8 +140,7 @@ TEST_F(RendererChainBuilderTest, TestNestedLoop) {
                                                   outerLoopToken3,
                                                   outerLoopClosing,
                                                   outermostToken2};
-    templatingengine::RendererChainBuilder testBuilder;
-    auto testRendererChainPtr = testBuilder.buildRendererChain(tokenPtrList);
+    auto testRendererChainPtr = templatingengine::RendererChainBuilder::buildRendererChain(tokenPtrList);
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["outerValueList"] = {"Outer element 1.", "Outer element 2."};
@@ -189,8 +184,7 @@ TEST_F(RendererChainBuilderTest, TestMissingLoopClosingToken) {
     templatingengine::TokenBasePtr_t plainTextTokenPtr =
             std::make_shared<templatingengine::PlainTextToken>("Plain Text");
     templatingengine::TokenPtrList_t tokenPtrList { loopOpenTokenPtr, variableTokenPtr, plainTextTokenPtr };
-    templatingengine::RendererChainBuilder testBuilder;
-    auto testRendererChainPtr = testBuilder.buildRendererChain(tokenPtrList);
+    auto testRendererChainPtr = templatingengine::RendererChainBuilder::buildRendererChain(tokenPtrList);
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["valueList"] = {"Value 1", "Value 2"};

@@ -14,26 +14,23 @@ namespace templatingengine {
     class TokenListBuilder {
     public:
 
-        TokenListBuilder();
+        static TokenBasePtr_t buildToken(const std::string& rawTokenText);
+        static TokenPtrList_t buildTokenPtrList(const std::list<std::string>& rawTokenTextList);
 
-        TokenBasePtr_t buildToken(const std::string& rawTokenText) const;
-        TokenPtrList_t buildTokenPtrList(const std::list<std::string>& rawTokenTextList) const;
+        typedef TokenBasePtr_t (*TokenBuilder_t)(const std::string& rawTokenText, const std::string& commandText);
+        typedef std::unordered_map<TokenType_t, TokenBuilder_t, TokenTypeHasher> TokenBuilderMap_t;
 
     private:
 
-        TokenBasePtr_t buildPlainTextToken(const std::string& rawTokenText) const;
+        static TokenBasePtr_t buildPlainTextToken(const std::string& rawTokenText);
 
         // Builders for tokens other than the plain text token
-        TokenBasePtr_t buildFallbackToken(const std::string& rawTokenText, const std::string& commandText) const;
-        TokenBasePtr_t buildLoopClosingToken(const std::string& rawTokenText, const std::string& commandText) const;
-        TokenBasePtr_t buildLoopOpeningToken(const std::string& rawTokenText, const std::string& commandText) const;
-        TokenBasePtr_t buildVariableToken(const std::string& rawTokenText, const std::string& commandText) const;
+        static TokenBasePtr_t buildFallbackToken(const std::string& rawTokenText, const std::string& commandText);
+        static TokenBasePtr_t buildLoopClosingToken(const std::string& rawTokenText, const std::string& commandText);
+        static TokenBasePtr_t buildLoopOpeningToken(const std::string& rawTokenText, const std::string& commandText);
+        static TokenBasePtr_t buildVariableToken(const std::string& rawTokenText, const std::string& commandText);
 
-        typedef TokenBasePtr_t (TokenListBuilder::*TokenBuilder_t)(const std::string& rawTokenText,
-                                                                   const std::string& commandText) const;
-        typedef std::unordered_map<TokenType_t, TokenBuilder_t, TokenTypeHasher> TokenBuilderMap_t;
-
-        TokenBuilderMap_t myTokenBuilderMap;
+        static const TokenBuilderMap_t ourTokenBuilderMap;
 
     };
 

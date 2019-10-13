@@ -26,9 +26,7 @@ RendererChainPtr_t Template::compile(std::istream &inputStream) {
     std::list<std::string> tokenTextList;
     tokenizer.tokenize(inputStream, tokenTextList);
 
-    TokenListBuilder tokenListBuilder;
-    auto tokenPtrList = tokenListBuilder.buildTokenPtrList(tokenTextList);
+    auto tokenPtrList = TokenListBuilder::buildTokenPtrList(tokenTextList);
 
-    RendererChainBuilder rendererChainBuilder;
-    return rendererChainBuilder.buildRendererChain(tokenPtrList);
+    return RendererChainBuilder::buildRendererChain(tokenPtrList);
 }
