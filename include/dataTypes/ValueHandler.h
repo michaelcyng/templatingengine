@@ -15,7 +15,7 @@ namespace templatingengine {
     class ValueHandler {
     public:
 
-        ValueHandler() = default;
+        ValueHandler(); // Creates an empty value list. This is needed for the case of assigning empty initializer list.
         ValueHandler(const char* value); // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
         ValueHandler(const std::string& value); // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
         ValueHandler(ValueBasePtr_t valuePtr); // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
@@ -23,14 +23,14 @@ namespace templatingengine {
         // Convert from container type to ValueHandler which contains a ValueList shared pointer
         template <typename Container,
                 std::enable_if_t<std::is_convertible<typename Container::value_type, ValueHandler>::value, int> = 0>
-        ValueHandler(const Container& valueContainer):
+        ValueHandler(const Container& valueContainer): // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
             myValuePtr(std::static_pointer_cast<ValueBase>(std::make_shared<ValueList>(
                     std::list<ValueHandler>(valueContainer.begin(), valueContainer.end())))) {
         }
 
         // Support for conversion from initializer list as it cannot be inferred as template argument
         template <typename T, std::enable_if_t<std::is_convertible<T, ValueHandler>::value, int> = 0 >
-        ValueHandler(const std::initializer_list<T>& valueList):
+        ValueHandler(const std::initializer_list<T>& valueList): // NOLINT(google-explicit-constructor,hicpp-explicit-conversions)
                 myValuePtr(std::static_pointer_cast<ValueBase>(std::make_shared<ValueList>(
                         std::list<ValueHandler>(valueList.begin(), valueList.end())))) {
         }

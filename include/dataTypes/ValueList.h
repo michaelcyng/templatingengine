@@ -27,10 +27,9 @@ namespace templatingengine {
         explicit ValueList(const ValueBaseContainer& container) : myValueList(container.begin(), container.end()) {
         }
 
-        static ValueBasePtr_t makeList();
-
         ValueBasePtrListIter_t begin() noexcept;
         ValueBasePtrListIter_t end()   noexcept;
+        bool                   empty() const noexcept;
         void                   printTo(std::ostream& os) const override;
 
     private:

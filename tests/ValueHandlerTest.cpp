@@ -40,6 +40,10 @@ TEST_F(ValueHandlerTest, TestStringListAssignment) {
     }
     ASSERT_EQ(valueList, std::list<std::string>({"string 1", "string 2"}));
 
+    valueHandler = {};
+    const auto& emptyList = static_cast<templatingengine::ValueList>(valueHandler);
+    ASSERT_TRUE(emptyList.empty());
+
     valueHandler = std::list<std::string>({"string 3", "string 4"});
     valueList.clear();
     for (const auto& valuePtr: static_cast<templatingengine::ValueList>(valueHandler)) {
