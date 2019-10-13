@@ -50,7 +50,7 @@ TEST_F(LoopRendererTest, TestEmptyList) {
     testRendererChainPtr->addRenderer(testRendererPtr1);
 
     templatingengine::ParameterSet parameterSet;
-    parameterSet["emptyList"] = templatingengine::ValueList::makeList();
+    parameterSet["emptyList"] = {};
 
     templatingengine::LoopRenderer testLoopRenderer("emptyList",
                                         "element",

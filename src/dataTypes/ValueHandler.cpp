@@ -7,6 +7,10 @@
 
 using namespace templatingengine;
 
+ValueHandler::ValueHandler(): myValuePtr(std::make_shared<ValueList>()) {
+
+}
+
 ValueHandler::ValueHandler(const char* value): ValueHandler(std::string(value)) {
 }
 

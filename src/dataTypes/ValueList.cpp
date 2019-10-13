@@ -23,6 +23,10 @@ ValueBasePtrListIter_t ValueList::end() noexcept {
     return myValueList.end();
 }
 
+bool ValueList::empty() const noexcept {
+    return myValueList.empty();
+}
+
 void ValueList::printTo(std::ostream &os) const {
     os << "[";
     bool firstFlag = true;

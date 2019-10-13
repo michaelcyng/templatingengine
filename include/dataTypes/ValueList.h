@@ -31,6 +31,7 @@ namespace templatingengine {
 
         ValueBasePtrListIter_t begin() noexcept;
         ValueBasePtrListIter_t end()   noexcept;
+        bool                   empty() const noexcept;
         void                   printTo(std::ostream& os) const override;
 
     private:
