@@ -16,6 +16,7 @@ namespace templatingengine {
     public:
 
         void addRenderer(RendererBasePtr_t& rendererPtr);
+        void addRenderer(RendererBasePtr_t&& rendererPtr);
         void render(std::ostream& os, const ParameterSet& parameters) const override;
 
     private:
