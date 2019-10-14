@@ -22,9 +22,8 @@ void Template::generateDocument(const ParameterSet &parameters, std::ostream& ou
 }
 
 RendererChainPtr_t Template::compile(std::istream &inputStream) {
-    TemplateTokenizer tokenizer;
-    std::list<std::string> tokenTextList;
-    tokenizer.tokenize(inputStream, tokenTextList);
+    TemplateTokenizer::TokenTextList_t tokenTextList;
+    TemplateTokenizer::tokenize(inputStream, tokenTextList);
 
     auto tokenPtrList = TokenListBuilder::buildTokenPtrList(tokenTextList);
 

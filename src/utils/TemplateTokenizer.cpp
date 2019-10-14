@@ -9,7 +9,7 @@
 
 using namespace templatingengine;
 
-void TemplateTokenizer::tokenize(std::istream &inputStream, std::list<std::string> &tokenTextList) {
+void TemplateTokenizer::tokenize(std::istream &inputStream, TokenTextList_t& tokenTextList) {
     EscapeStream escapedInputStream(inputStream);
 
     std::stringstream buffer;

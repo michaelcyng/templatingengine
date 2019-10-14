@@ -13,10 +13,9 @@ namespace templatingengine {
     class TemplateTokenizer {
     public:
 
-        void tokenize(std::istream& inputStream, std::list<std::string>& tokenTextList);
+        typedef std::list<std::string> TokenTextList_t;
 
-    private:
-
+        static void tokenize(std::istream& inputStream, TokenTextList_t& tokenTextList);
     };
 
 }
