@@ -10,6 +10,10 @@ void RendererChain::addRenderer(RendererBasePtr_t& rendererPtr) {
     myRendererPtrList.push_back(rendererPtr);
 }
 
+void RendererChain::addRenderer(templatingengine::RendererBasePtr_t &&rendererPtr) {
+    myRendererPtrList.push_back(std::move(rendererPtr));
+}
+
 void RendererChain::render(std::ostream &os, const templatingengine::ParameterSet &parameters) const {
     for (const auto& rendererPtr: myRendererPtrList) {
         rendererPtr->render(os, parameters);

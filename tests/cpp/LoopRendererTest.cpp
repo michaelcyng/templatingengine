@@ -22,14 +22,10 @@ protected:
 };
 
 TEST_F(LoopRendererTest, TestSingleLoop) {
-    templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
-    templatingengine::RendererBasePtr_t testVariableRendererPtr =
-            std::make_shared<templatingengine::VariableRenderer>("testListElement");
-    testRendererChainPtr->addRenderer(testVariableRendererPtr);
+    auto testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
 
-    templatingengine::RendererBasePtr_t testPlainTextRendererPtr =
-            std::make_shared<templatingengine::PlainTextRenderer>(".");
-    testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
+    testRendererChainPtr->addRenderer(std::make_shared<templatingengine::VariableRenderer>("testListElement"));
+    testRendererChainPtr->addRenderer(std::make_shared<templatingengine::PlainTextRenderer>("."));
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["testList"] = {"Value 1", "Value 2", "Value 3"};
@@ -44,36 +40,13 @@ TEST_F(LoopRendererTest, TestSingleLoop) {
 }
 
 TEST_F(LoopRendererTest, TestEmptyList) {
-    templatingengine::RendererBasePtr_t testRendererPtr1 = std::make_shared<templatingengine::PlainTextRenderer>("a");
-
     templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
-    testRendererChainPtr->addRenderer(testRendererPtr1);
+    testRendererChainPtr->addRenderer(std::make_shared<templatingengine::PlainTextRenderer>("a"));
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["emptyList"] = {};
 
-    templatingengine::LoopRenderer testLoopRenderer("emptyList",
-                                        "element",
-                                                  testRendererChainPtr);
-    std::stringstream ss;
-    testLoopRenderer.render(ss, parameterSet);
-
-    ASSERT_EQ(ss.str(), "");
-}
-
-TEST_F(LoopRendererTest, TestNonExistingList) {
-    templatingengine::RendererBasePtr_t testRendererPtr1 = std::make_shared<templatingengine::PlainTextRenderer>("a");
-
-    templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
-    testRendererChainPtr->addRenderer(testRendererPtr1);
-
-    templatingengine::ValueHandler emptyValueListPtr = std::static_pointer_cast<templatingengine::ValueBase>(
-            std::make_shared<templatingengine::ValueList>());
-
-    templatingengine::ParameterSet parameterSet;
-
-    templatingengine::LoopRenderer testLoopRenderer("nonExistingList",
-                                                    "element",
+    templatingengine::LoopRenderer testLoopRenderer("emptyList","element",
                                                     testRendererChainPtr);
     std::stringstream ss;
     testLoopRenderer.render(ss, parameterSet);
@@ -81,22 +54,30 @@ TEST_F(LoopRendererTest, TestNonExistingList) {
     ASSERT_EQ(ss.str(), "");
 }
 
+TEST_F(LoopRendererTest, TestNonExistingList) {
+    templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
+    testRendererChainPtr->addRenderer(std::make_shared<templatingengine::PlainTextRenderer>("a"));
+
+    templatingengine::LoopRenderer testLoopRenderer("nonExistingList",
+                                                    "element",
+                                                    testRendererChainPtr);
+    std::stringstream ss;
+    testLoopRenderer.render(ss, templatingengine::ParameterSet());
+
+    ASSERT_EQ(ss.str(), "");
+}
+
 TEST_F(LoopRendererTest, TestSingleValueAsList) {
     templatingengine::RendererChainPtr_t testRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
-    templatingengine::RendererBasePtr_t testVariableRendererPtr =
-            std::make_shared<templatingengine::VariableRenderer>("testListElement");
-    testRendererChainPtr->addRenderer(testVariableRendererPtr);
 
-    templatingengine::RendererBasePtr_t testPlainTextRendererPtr =
-            std::make_shared<templatingengine::PlainTextRenderer>(".");
-    testRendererChainPtr->addRenderer(testPlainTextRendererPtr);
+    testRendererChainPtr->addRenderer(std::make_shared<templatingengine::VariableRenderer>("testListElement"));
+    testRendererChainPtr->addRenderer( std::make_shared<templatingengine::PlainTextRenderer>("."));
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["testList"] = "Test String";
 
-    templatingengine::LoopRenderer testLoopRenderer("testList",
-                                                  "testListElement",
-                                                  testRendererChainPtr);
+    templatingengine::LoopRenderer testLoopRenderer("testList","testListElement",
+                                                    testRendererChainPtr);
     std::stringstream ss;
     testLoopRenderer.render(ss, parameterSet);
 
@@ -105,13 +86,9 @@ TEST_F(LoopRendererTest, TestSingleValueAsList) {
 
 TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
     templatingengine::RendererChainPtr_t testLoopRendererChainPtr = std::make_shared<templatingengine::RendererChain>();
-    templatingengine::RendererBasePtr_t testLoopVariableRendererPtr =
-            std::make_shared<templatingengine::VariableRenderer>("testListElement");
-    testLoopRendererChainPtr->addRenderer(testLoopVariableRendererPtr);
 
-    templatingengine::RendererBasePtr_t testPlainTextRendererPtr =
-            std::make_shared<templatingengine::PlainTextRenderer>(".");
-    testLoopRendererChainPtr->addRenderer(testPlainTextRendererPtr);
+    testLoopRendererChainPtr->addRenderer(std::make_shared<templatingengine::VariableRenderer>("testListElement"));
+    testLoopRendererChainPtr->addRenderer(std::make_shared<templatingengine::PlainTextRenderer>("."));
 
     templatingengine::ParameterSet parameterSet;
     parameterSet["testList"] = {"Inner String 1", "Inner String 2", "Inner String 3"};
@@ -121,11 +98,8 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
                                                              "testListElement",
                                                              testLoopRendererChainPtr);
 
-    templatingengine::RendererBasePtr_t testVariableRendererPtr =
-            std::make_shared<templatingengine::VariableRenderer>("testListElement");
-
     templatingengine::RendererChain testRendererChain;
-    testRendererChain.addRenderer(testVariableRendererPtr);
+    testRendererChain.addRenderer(std::make_shared<templatingengine::VariableRenderer>("testListElement"));
     testRendererChain.addRenderer(testLoopRendererPtr);
 
     parameterSet["testListElement"] = "Outer String.";
@@ -136,21 +110,17 @@ TEST_F(LoopRendererTest, TestLocalVarOverrideGlobal) {
 }
 
 TEST_F(LoopRendererTest, TestNestedLoop) {
-    templatingengine::RendererBasePtr_t innerLoopVariableRendererPtr =
-            std::make_shared<templatingengine::VariableRenderer>("innerLoopElement");
     templatingengine::RendererChainPtr_t innerLoopRendererChainPtr =
             std::make_shared<templatingengine::RendererChain>();
-    innerLoopRendererChainPtr->addRenderer(innerLoopVariableRendererPtr);
+    innerLoopRendererChainPtr->addRenderer(std::make_shared<templatingengine::VariableRenderer>("innerLoopElement"));
     templatingengine::RendererBasePtr_t innerLoopRendererPtr =
             std::make_shared<templatingengine::LoopRenderer>("innerValueList",
                                                              "innerLoopElement",
                                                              innerLoopRendererChainPtr);
 
-    templatingengine::RendererBasePtr_t outerLoopVariableRendererPtr =
-            std::make_shared<templatingengine::VariableRenderer>("outputLoopOpenElement");
     templatingengine::RendererChainPtr_t outerLoopRendererChainPtr =
             std::make_shared<templatingengine::RendererChain>();
-    outerLoopRendererChainPtr->addRenderer(outerLoopVariableRendererPtr);
+    outerLoopRendererChainPtr->addRenderer(std::make_shared<templatingengine::VariableRenderer>("outputLoopOpenElement"));
     outerLoopRendererChainPtr->addRenderer(innerLoopRendererPtr);
     templatingengine::LoopRenderer outerLoopRenderer("outerOpenValueList",
                                                      "outputLoopOpenElement",
