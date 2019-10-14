@@ -19,9 +19,9 @@ using namespace templatingengine;
 
 const TokenListBuilder::TokenBuilderMap_t TokenListBuilder::ourTokenBuilderMap({
     {TokenType_t::LoopClose_e, &TokenListBuilder::buildLoopClosingToken},
-    {TokenType_t::LoopOpen_e, &TokenListBuilder::buildLoopOpeningToken},
-    {TokenType_t::Unknown_e, &TokenListBuilder::buildFallbackToken},
-    {TokenType_t::Variable_e, &TokenListBuilder::buildVariableToken}
+    {TokenType_t::LoopOpen_e,  &TokenListBuilder::buildLoopOpeningToken},
+    {TokenType_t::Unknown_e,   &TokenListBuilder::buildFallbackToken},
+    {TokenType_t::Variable_e,  &TokenListBuilder::buildVariableToken}
 });
 
 TokenBasePtr_t TokenListBuilder::buildToken(const std::string &rawTokenText) {
